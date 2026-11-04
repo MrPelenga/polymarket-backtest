@@ -1,0 +1,95 @@
+// =============================================================================
+// Mesures DAX du rapport « Backtest Polymarket »
+// À créer dans une table de mesures vide nommée _Mesures
+// (Accueil > Entrer des données > nommer la table _Mesures > Charger).
+// =============================================================================
+
+// ---------- Cagnotte ----------------------------------------------------------
+
+Cagnotte départ = 50
+
+// Valeur de la cagnotte au dernier point de la courbe, stratégie par stratégie
+// (SUMX sur les stratégies pour rester juste si plusieurs sont sélectionnées).
+Cagnotte finale =
+SUMX (
+    VALUES ( strategies[strategie] ),
+    VAR derniereDate = CALCULATE ( MAX ( cagnotte[date] ) )
+    RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniereDate )
+)
+
+ROI cagnotte =
+DIVIDE ( [Cagnotte finale] - [Cagnotte départ] * DISTINCTCOUNT ( strategies[strategie] ),
+         [Cagnotte départ] * DISTINCTCOUNT ( strategies[strategie] ) )
+
+// Pour la courbe : valeur de la cagnotte à la date affichée (dernier point connu).
+Cagnotte à date =
+VAR d = MAX ( Calendrier[Date] )
+RETURN
+    SUMX (
+        VALUES ( strategies[strategie] ),
+        VAR derniere = CALCULATE ( MAX ( cagnotte[date] ), cagnotte[Date] <= d, REMOVEFILTERS ( Calendrier ) )
+        RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniere, REMOVEFILTERS ( Calendrier ) )
+    )
+
+Plus haut à date =
+VAR d = MAX ( Calendrier[Date] )
+RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[Date] <= d, REMOVEFILTERS ( Calendrier ) )
+
+Drawdown = DIVIDE ( [Cagnotte à date], [Plus haut à date] ) - 1
+
+Drawdown max =
+MINX ( VALUES ( Calendrier[Date] ), [Drawdown] )
+
+// ---------- Paris ---------------------------------------------------------------
+
+Nb paris = COUNTROWS ( paris )
+
+Paris gagnés = SUM ( paris[gagne] )
+
+Taux de réussite = DIVIDE ( [Paris gagnés], [Nb paris] )
+
+Montant misé = SUM ( paris[mise] )
+
+Gain net = SUM ( paris[gain] )
+
+// Rendement par dollar misé : indépendant de la taille de la cagnotte,
+// c'est la mesure à comparer entre catégories.
+ROI sur mises = DIVIDE ( [Gain net], [Montant misé] )
+
+Mise moyenne (% cagnotte) = AVERAGE ( paris[pct_cagnotte] )
+
+Écart moyen (points) = AVERAGE ( paris[ecart_points] )
+
+// ---------- Qualité des prix du marché ----------------------------------------
+
+// Score de Brier : erreur quadratique moyenne entre le prix à J-3 et le résultat.
+// 0 = parfait, 0,25 = pile ou face systématique à 50 %.
+Brier marché J-3 =
+AVERAGEX (
+    FILTER ( marches, NOT ISBLANK ( marches[prix_j3] ) ),
+    ( marches[prix_j3] - marches[resultat_yes] ) ^ 2
+)
+
+Nb marchés = COUNTROWS ( marches )
+
+// ---------- Calibration ---------------------------------------------------------
+
+Fréquence réelle =
+DIVIDE ( SUMX ( calibration, calibration[freq_reelle] * calibration[n] ), SUM ( calibration[n] ) )
+
+Prix moyen =
+DIVIDE ( SUMX ( calibration, calibration[prix_moyen] * calibration[n] ), SUM ( calibration[n] ) )
+
+Écart de calibration (points) = ( [Fréquence réelle] - [Prix moyen] ) * 100
+
+// ---------- Tirages aléatoires -------------------------------------------------
+
+Nb tirages = COUNTROWS ( aleatoire_tirages )
+
+Part des tirages gagnants =
+DIVIDE ( COUNTROWS ( FILTER ( aleatoire_tirages, aleatoire_tirages[cagnotte_finale] > [Cagnotte départ] ) ),
+         [Nb tirages] )
+
+Meilleur tirage = MAX ( aleatoire_tirages[cagnotte_finale] )
+
+Tirage médian = MEDIAN ( aleatoire_tirages[cagnotte_finale] )

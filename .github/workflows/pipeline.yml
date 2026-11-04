@@ -29,8 +29,12 @@ jobs:
       - name: Tests
         run: python -m pytest -q
       - name: Collecte et backtest
-        run: python run_pipeline.py ${{ github.event.inputs.step || 'all' }}
+        run: |
+          mkdir -p data/logs
+          set -o pipefail
+          python run_pipeline.py ${{ github.event.inputs.step || 'all' }} 2>&1 | tee data/logs/pipeline.log
       - name: Publier les données dans le repo
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
