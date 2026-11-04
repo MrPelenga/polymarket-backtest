@@ -4,6 +4,12 @@ from playwright.sync_api import sync_playwright
 
 BASE = "http://localhost:4173"
 pages = sys.argv[1:] or ["/projets/7", "/projets"]
+import urllib.request
+for u in ("/projects/polymarket-backtest.png", "/projects/lead-engine-cover.svg"):
+    try:
+        print(u, urllib.request.urlopen(BASE + u).status)
+    except Exception as e:
+        print(u, "ERREUR", e)
 with sync_playwright() as p:
     b = p.chromium.launch()
     for theme in ("light", "dark"):

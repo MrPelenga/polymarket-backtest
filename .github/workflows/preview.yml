@@ -28,6 +28,7 @@ jobs:
       - name: Build
         run: |
           mkdir -p shots
+          git -C site log --oneline -1 | tee shots/site_commit.log; ls -la site/public/projects | tee -a shots/site_commit.log
           cd site && npm ci --no-audit --no-fund && npx tsc -p tsconfig.app.json --noEmit 2>&1 | tee ../shots/tsc.log; npm run build 2>&1 | tee ../shots/build.log
       - name: Captures
         run: |
