@@ -8,7 +8,7 @@ Compter environ une heure. Tout se fait dans Power BI Desktop (gratuit, Windows)
 
 | Fichier | Rôle | Une ligne = |
 |---|---|---|
-| `marches.csv` | dimension | un marché (question, catégorie, prix J-7/J-3/J-1, résultat) |
+| `marches.csv` | dimension | un marché (question, catégorie, prix J-7/J-3/J-2/J-1, résultat) |
 | `strategies.csv` | dimension | une stratégie testée |
 | `paris.csv` | fait | un pari simulé |
 | `cagnotte.csv` | fait | un point de la courbe de cagnotte |
@@ -71,7 +71,7 @@ Thème : *Affichage > Thèmes > Parcourir* et choisir [`theme.json`](theme.json)
 ### Page 2 · Par catégorie
 - Barres horizontales : `marches[categorie]` × `ROI sur mises`, filtre de page `strategie = calibration`.
 - Matrice : lignes `marches[categorie]`, colonnes `strategies[strategie]`, valeurs `Nb paris`, `Taux de réussite`, `ROI sur mises`.
-- Barres : `marches[categorie]` × `Brier marché J-3` (quelle catégorie le marché prédit le mieux).
+- Barres : `marches[categorie]` × `Brier marché J-1` (quelle catégorie le marché prédit le mieux).
 - C'est la page qui teste le « pivot météo » de l'article.
 
 ### Page 3 · Calibration

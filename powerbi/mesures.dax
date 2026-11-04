@@ -62,12 +62,12 @@ Mise moyenne (% cagnotte) = AVERAGE ( paris[pct_cagnotte] )
 
 // ---------- Qualité des prix du marché ----------------------------------------
 
-// Score de Brier : erreur quadratique moyenne entre le prix à J-3 et le résultat.
+// Score de Brier : erreur quadratique moyenne entre le prix à J-1 et le résultat.
 // 0 = parfait, 0,25 = pile ou face systématique à 50 %.
-Brier marché J-3 =
+Brier marché J-1 =
 AVERAGEX (
-    FILTER ( marches, NOT ISBLANK ( marches[prix_j3] ) ),
-    ( marches[prix_j3] - marches[resultat_yes] ) ^ 2
+    FILTER ( marches, NOT ISBLANK ( marches[prix_j1] ) ),
+    ( marches[prix_j1] - marches[resultat_yes] ) ^ 2
 )
 
 Nb marchés = COUNTROWS ( marches )
