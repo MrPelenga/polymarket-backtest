@@ -28,7 +28,7 @@ SESSION = requests.Session()
 SESSION.headers["User-Agent"] = "polymarket-backtest (projet portfolio data)"
 
 
-def _get(url: str, params: dict, tries: int = 5) -> object:
+def _get(url: str, params: dict, tries: int = 8) -> object:
     """GET avec reprises : les API publiques renvoient parfois des 429/5xx passagers."""
     for i in range(tries):
         try:
@@ -36,14 +36,15 @@ def _get(url: str, params: dict, tries: int = 5) -> object:
             if r.status_code == 200:
                 return r.json()
             if r.status_code in (429, 500, 502, 503, 504):
-                time.sleep(2 ** i)
+                log.warning("HTTP %s, nouvel essai dans %ss", r.status_code, min(2 ** i, 60))
+                time.sleep(min(2 ** i, 60))
                 continue
             r.raise_for_status()
         except requests.RequestException as e:
             if i == tries - 1:
                 raise
             log.warning("Erreur réseau (%s), nouvel essai", e)
-            time.sleep(2 ** i)
+            time.sleep(min(2 ** i, 60))
     raise RuntimeError(f"Échec après {tries} essais : {url} {params}")
 
 
@@ -75,6 +76,7 @@ def fetch_markets(max_pages: int = 3000, page_size: int = 100, max_offset: int =
             "volume_num_min": C.MIN_VOLUME, "order": "endDate", "ascending": "true",
         }
         batch = _get(C.GAMMA_URL, params)
+        time.sleep(0.1)  # rester poli avec l'API publique
         if isinstance(batch, dict):  # certaines versions de l'API enveloppent la liste
             batch = batch.get("data") or batch.get("markets") or []
         for m in batch:
@@ -189,12 +191,14 @@ def run() -> None:
                 log.info("Historiques : %d/%d", i, len(futs))
     snaps = pd.DataFrame(rows)
 
-    markets.drop(columns="token_yes").to_csv(C.RAW / "markets.csv", index=False)
+    # Seul l'échantillon est sauvegardé (le repo reste léger) ; les totaux vont dans les stats.
+    sample.drop(columns="token_yes").to_csv(C.RAW / "markets.csv", index=False)
     snaps.to_csv(C.RAW / "snapshots.csv", index=False)
     stats = {
         "marches_recus": len(raw),
         "marches_binaires_resolus": len(markets),
         "marches_echantillon": len(sample),
+        "marches_par_categorie": markets["categorie"].value_counts().to_dict(),
         "historiques_en_echec": errors,
         "historiques_avec_prix_j3": int(snaps["prix_j3"].notna().sum()) if len(snaps) else 0,
         "date_extraction": pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d"),
