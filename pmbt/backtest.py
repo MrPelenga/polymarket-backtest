@@ -21,10 +21,10 @@ log = logging.getLogger(__name__)
 STRATEGIES = {
     "calibration": ("Calibration", "Règles de l'article",
                     "Corrige le prix selon les écarts constatés par tranche de prix en 2025."),
-    "calibration_kelly_plein": ("Calibration", "Kelly plein, sans garde-fous",
-                                "Même estimation, mais mise de Kelly entière, sans plafond, ni limite, ni arrêt."),
+    "momentum_kelly_plein": ("Momentum", "Kelly plein, sans garde-fous",
+                             "Même estimation que Momentum, mais mise de Kelly entière, sans plafond, ni limite, ni arrêt."),
     "momentum": ("Momentum", "Règles de l'article",
-                 "Prolonge la tendance du prix entre J-7 et J-3."),
+                 "Prolonge la tendance du prix entre J-2 et J-1."),
     "aleatoire": ("Aléatoire", "Règles de l'article",
                   f"Pile ou face, mêmes règles de mise. Tirage médian sur {C.RANDOM_RUNS}."),
 }
@@ -38,6 +38,8 @@ def load() -> pd.DataFrame:
     df = m.merge(s, on="market_id", how="inner")
     df["date_cloture"] = pd.to_datetime(df["date_cloture"], utc=True)
     df["date_decision"] = df["date_cloture"] - pd.Timedelta(hours=C.DECISION_HOURS)
+    df["prix"] = df[f"prix_j{C.DECISION_HOURS // 24}"]
+    df["prix_avant"] = df[f"prix_j{C.MOMENTUM_FROM_HOURS // 24}"]
     df["periode"] = np.where(df["date_cloture"] < pd.Timestamp(C.TRAIN_END, tz="UTC"), "Apprentissage", "Test")
     return df
 
@@ -49,19 +51,19 @@ def brier(p: pd.Series, y: pd.Series) -> float:
 def run() -> None:
     C.OUT.mkdir(parents=True, exist_ok=True)
     df = load()
-    priced = df.dropna(subset=["prix_j3"])
+    priced = df.dropna(subset=["prix"])
     train = priced[priced["periode"] == "Apprentissage"]
     test = priced[priced["periode"] == "Test"].copy()
-    log.info("Marchés avec prix à J-3 : %d (apprentissage %d, test %d)", len(priced), len(train), len(test))
+    log.info("Marchés avec un prix au moment de la décision : %d (apprentissage %d, test %d)", len(priced), len(train), len(test))
 
     table = calibration_table(train)
-    cols = ["market_id", "date_decision", "date_cloture", "prix_j3", "resultat_yes"]
+    cols = ["market_id", "date_decision", "date_cloture", "prix", "resultat_yes"]
 
     runs: dict[str, tuple] = {}
     runs["calibration"] = simulate(test[cols].assign(proba=estimate_calibration(test, table)), ARTICLE, "calibration")
-    runs["calibration_kelly_plein"] = simulate(
-        test[cols].assign(proba=estimate_calibration(test, table)), FULL_KELLY, "calibration_kelly_plein")
     runs["momentum"] = simulate(test[cols].assign(proba=estimate_momentum(test)), ARTICLE, "momentum")
+    runs["momentum_kelly_plein"] = simulate(
+        test[cols].assign(proba=estimate_momentum(test)), FULL_KELLY, "momentum_kelly_plein")
 
     # Stratégie aléatoire : on la joue de nombreuses fois pour voir la dispersion des résultats.
     random_runs = []
@@ -79,8 +81,8 @@ def run() -> None:
     summaries = [r[2] for r in runs.values()]
 
     marches = df[["market_id", "question", "evenement", "categorie", "date_cloture", "volume",
-                  "resultat_yes", "periode", "prix_j7", "prix_j3", "prix_j1"]].copy()
-    marches["tranche_prix_j3"] = price_bucket(marches["prix_j3"]).astype(str).replace("nan", "")
+                  "resultat_yes", "periode", "prix_j7", "prix_j3", "prix_j2", "prix_j1"]].copy()
+    marches["tranche_prix_decision"] = price_bucket(df["prix"]).astype(str).replace("nan", "")
     for frame, col in ((marches, "date_cloture"), (bets, "date_entree"), (bets, "date_cloture"), (curve, "date")):
         frame[col] = pd.to_datetime(frame[col], utc=True).dt.strftime("%Y-%m-%d %H:%M")
 
@@ -107,7 +109,7 @@ def run() -> None:
     # ---- Résumé pour le site -----------------------------------------------
     collect_stats = json.loads((C.RAW / "collect_stats.json").read_text())
     by_cat = (priced.groupby("categorie")
-              .apply(lambda g: pd.Series({"n": len(g), "brier": round(brier(g["prix_j3"], g["resultat_yes"]), 4),
+              .apply(lambda g: pd.Series({"n": len(g), "brier": round(brier(g["prix"], g["resultat_yes"]), 4),
                                           "part_yes": round(g["resultat_yes"].mean(), 3)}), include_groups=False)
               .reset_index().sort_values("n", ascending=False))
     cal_bets = runs["calibration"][0]
@@ -124,7 +126,7 @@ def run() -> None:
         "collecte": collect_stats,
         "periodes": {"apprentissage": f"{C.END_MIN} → {C.TRAIN_END}", "test": f"{C.TRAIN_END} → {C.END_MAX}"},
         "volumes": {"marches_avec_prix": len(priced), "apprentissage": len(train), "test": len(test)},
-        "brier_marche_j3": round(brier(priced["prix_j3"], priced["resultat_yes"]), 4),
+        "brier_marche": round(brier(priced["prix"], priced["resultat_yes"]), 4),
         "resultats": summaries,
         "courbes": {k: weekly(r[1]) for k, r in runs.items()},
         "calibration_test": calibration_table(test)[["tranche", "n", "prix_moyen", "freq_reelle"]]
@@ -145,7 +147,8 @@ def run() -> None:
         "regles": {"cagnotte": C.BANKROLL, "ecart_min_points": C.MIN_EDGE * 100, "kelly": C.KELLY_FRACTION,
                    "plafond_pct": C.MAX_STAKE_PCT * 100, "max_ouverts": C.MAX_OPEN,
                    "stop_pct": C.STOP_DRAWDOWN * 100, "glissement_points": C.SLIPPAGE * 100,
-                   "mise_min": C.MIN_STAKE, "decision_heures": C.DECISION_HOURS},
+                   "mise_min": C.MIN_STAKE, "decision_heures": C.DECISION_HOURS,
+                   "duree_min_jours": C.MIN_LIFESPAN_DAYS},
     }
     (C.DATA / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False, default=str))
     for s in summaries:

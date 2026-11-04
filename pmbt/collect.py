@@ -6,7 +6,7 @@ Deux API publiques, sans compte ni clé :
 
 Le script écrit deux fichiers dans data/raw/ :
 - markets.csv   : un marché binaire résolu par ligne ;
-- snapshots.csv : le prix du « Yes » à J-7, J-3 et J-1 avant la clôture.
+- snapshots.csv : le prix du « Yes » à J-7, J-3, J-2 et J-1 avant la clôture.
 """
 
 from __future__ import annotations
@@ -116,6 +116,7 @@ def parse_market(m: dict) -> dict | None:
     ref = min([d for d in (end, closed) if pd.notna(d)], default=pd.NaT)
     if pd.isna(ref):
         return None
+    start = pd.to_datetime(m.get("startDate") or m.get("createdAt"), utc=True, errors="coerce")
 
     try:
         volume = float(m.get("volumeNum") or m.get("volume") or 0)
@@ -133,6 +134,7 @@ def parse_market(m: dict) -> dict | None:
         "evenement": event_title,
         "slug": m.get("slug") or "",
         "categorie": categorize(f"{question} {event_title}"),
+        "date_ouverture": start,
         "date_cloture": ref,
         "volume": round(volume, 2),
         "issue_1": outcomes[0],
@@ -152,7 +154,7 @@ def select_for_pricing(df: pd.DataFrame, n: int, seed: int) -> pd.DataFrame:
 
 
 def price_snapshots(token: str, close: pd.Timestamp) -> dict[str, float]:
-    """Prix du « Yes » à J-7, J-3 et J-1 avant la clôture (NaN si aucun échange récent)."""
+    """Prix de la première issue aux horaires de SNAPSHOT_HOURS (NaN si aucun échange récent)."""
     close_ts = int(close.timestamp())
     start = close_ts - (max(C.SNAPSHOT_HOURS) + C.SNAPSHOT_TOLERANCE_H) * 3600
     data = _get(C.CLOB_HISTORY_URL, {"market": token, "startTs": start, "endTs": close_ts, "fidelity": 60})
@@ -175,8 +177,13 @@ def run() -> None:
     markets = pd.DataFrame(parsed).drop_duplicates("market_id")
     markets = markets[(markets["date_cloture"] >= C.END_MIN) & (markets["date_cloture"] < C.END_MAX)]
     log.info("%d marchés reçus, %d binaires résolus et dans le périmètre", len(raw), len(markets))
+    # Les marchés très courts (ex. « Bitcoin monte ou baisse entre 10 h et 10 h 15 ») n'ont pas
+    # de prix 24 à 48 h avant leur clôture : ils ne peuvent pas entrer dans le backtest.
+    duree = (markets["date_cloture"] - markets["date_ouverture"]).dt.total_seconds() / 86400
+    eligible = markets[duree >= C.MIN_LIFESPAN_DAYS]
+    log.info("%d marchés ouverts au moins %.1f jours", len(eligible), C.MIN_LIFESPAN_DAYS)
 
-    sample = select_for_pricing(markets, C.MAX_MARKETS_PRICED, C.SEED)
+    sample = select_for_pricing(eligible, C.MAX_MARKETS_PRICED, C.SEED)
     rows, errors = [], 0
     with ThreadPoolExecutor(max_workers=8) as pool:
         futs = {pool.submit(price_snapshots, r.token_yes, r.date_cloture): r.market_id
@@ -197,10 +204,12 @@ def run() -> None:
     stats = {
         "marches_recus": len(raw),
         "marches_binaires_resolus": len(markets),
+        "marches_eligibles_duree": len(eligible),
         "marches_echantillon": len(sample),
         "marches_par_categorie": markets["categorie"].value_counts().to_dict(),
+        "eligibles_par_categorie": eligible["categorie"].value_counts().to_dict(),
         "historiques_en_echec": errors,
-        "historiques_avec_prix_j3": int(snaps["prix_j3"].notna().sum()) if len(snaps) else 0,
+        "historiques_avec_prix_j1": int(snaps["prix_j1"].notna().sum()) if len(snaps) else 0,
         "date_extraction": pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d"),
     }
     (C.RAW / "collect_stats.json").write_text(json.dumps(stats, indent=2))

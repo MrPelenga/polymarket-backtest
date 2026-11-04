@@ -9,7 +9,7 @@ def t(day: int, hour: int = 0) -> pd.Timestamp:
 
 
 def cands(rows):
-    return pd.DataFrame(rows, columns=["market_id", "date_decision", "date_cloture", "prix_j3", "proba", "resultat_yes"])
+    return pd.DataFrame(rows, columns=["market_id", "date_decision", "date_cloture", "prix", "proba", "resultat_yes"])
 
 
 def test_decide_skips_small_edge():

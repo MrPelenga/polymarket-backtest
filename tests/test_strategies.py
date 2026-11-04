@@ -10,24 +10,24 @@ def test_calibration_learns_bias():
     rng = np.random.default_rng(0)
     p = np.full(2000, 0.15)
     y = (rng.random(2000) < 0.05).astype(int)  # outsiders à 15 % qui ne gagnent que 5 % du temps
-    table = calibration_table(pd.DataFrame({"prix_j3": p, "resultat_yes": y}))
-    est = estimate_calibration(pd.DataFrame({"prix_j3": [0.15]}), table)
+    table = calibration_table(pd.DataFrame({"prix": p, "resultat_yes": y}))
+    est = estimate_calibration(pd.DataFrame({"prix": [0.15]}), table)
     assert est.iloc[0] < 0.08
 
 
 def test_calibration_shrinks_small_buckets():
-    table = calibration_table(pd.DataFrame({"prix_j3": [0.15] * 3, "resultat_yes": [1, 1, 1]}))
-    est = estimate_calibration(pd.DataFrame({"prix_j3": [0.15]}), table)
+    table = calibration_table(pd.DataFrame({"prix": [0.15] * 3, "resultat_yes": [1, 1, 1]}))
+    est = estimate_calibration(pd.DataFrame({"prix": [0.15]}), table)
     assert est.iloc[0] < 0.30  # 3 exemples ne suffisent pas à croire à 100 %
 
 
 def test_momentum_without_history_is_neutral():
-    est = estimate_momentum(pd.DataFrame({"prix_j3": [0.4], "prix_j7": [np.nan]}))
+    est = estimate_momentum(pd.DataFrame({"prix": [0.4], "prix_avant": [np.nan]}))
     assert est.iloc[0] == 0.4
 
 
 def test_random_is_reproducible():
-    d = pd.DataFrame({"prix_j3": [0.5] * 10})
+    d = pd.DataFrame({"prix": [0.5] * 10})
     assert estimate_random(d, 1).equals(estimate_random(d, 1))
 
 

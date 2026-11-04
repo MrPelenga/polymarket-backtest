@@ -16,11 +16,13 @@ END_MIN = "2025-01-01"          # marchés clos à partir de cette date
 END_MAX = "2026-10-31"          # ... et jusqu'à celle-ci
 TRAIN_END = "2026-01-01"        # avant : apprentissage ; après : test (backtest)
 MIN_VOLUME = 5_000              # l'article écarte les marchés sous 5 000 $
-MAX_MARKETS_PRICED = 6_000      # nombre de marchés dont on télécharge l'historique
+MAX_MARKETS_PRICED = 10_000     # nombre de marchés dont on télécharge l'historique
+MIN_LIFESPAN_DAYS = 2.5         # marchés ouverts au moins 2,5 jours (sinon pas de prix à J-2)
 
 # --- Moment de la décision ----------------------------------------------------
-DECISION_HOURS = 72             # on décide 72 h avant la clôture du marché
-SNAPSHOT_HOURS = (168, 72, 24)  # prix relevés à J-7, J-3 et J-1
+DECISION_HOURS = 24             # on décide 24 h avant la clôture du marché
+MOMENTUM_FROM_HOURS = 48        # la tendance se mesure entre J-2 et le moment de la décision
+SNAPSHOT_HOURS = (168, 72, 48, 24)  # prix relevés à J-7, J-3, J-2 et J-1
 SNAPSHOT_TOLERANCE_H = 12       # un prix plus vieux que ça avant l'horaire visé est ignoré
 
 # --- Règles de l'article -----------------------------------------------------

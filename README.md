@@ -17,7 +17,7 @@ Aucun relevé public ne prouve ce chiffre. Plutôt que de le croire ou de le rej
    - **Calibration** : corrige le prix selon les écarts entre prix et résultats constatés en 2025, appliqués à 2026 (aucune information du futur).
    - **Momentum** : prolonge la tendance du prix entre J-7 et J-3.
    - **Aléatoire** : pile ou face avec les mêmes règles de mise, joué 300 fois. C'est la référence.
-3. **Simulation** (`pmbt/simulate.py`) : la cagnotte est rejouée dans l'ordre chronologique, l'argent misé reste bloqué jusqu'à la résolution, et toutes les règles de l'article s'appliquent. Une variante « Kelly plein, sans garde-fous » montre ce que les règles de survie changent.
+3. **Simulation** (`pmbt/simulate.py`) : la cagnotte est rejouée dans l'ordre chronologique, l'argent misé reste bloqué jusqu'à la résolution, et toutes les règles de l'article s'appliquent. Une variante « Momentum, Kelly plein, sans garde-fous » montre ce que les règles de survie changent.
 4. **Export** (`pmbt/backtest.py`) : tables en schéma en étoile pour Power BI dans `data/powerbi/`, et un résumé `data/summary.json` pour le portfolio.
 
 ### Hypothèses à connaître

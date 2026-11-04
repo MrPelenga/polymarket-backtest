@@ -1,7 +1,7 @@
 """Simulation chronologique d'une cagnotte avec les règles de l'article.
 
 Déroulé : les marchés sont parcourus dans l'ordre où la décision aurait été prise
-(J-3 avant leur clôture). Avant chaque décision, on encaisse les paris déjà résolus.
+(24 h avant leur clôture). Avant chaque décision, on encaisse les paris déjà résolus.
 L'argent misé reste bloqué jusqu'à la résolution, comme sur le vrai site.
 """
 
@@ -53,7 +53,7 @@ def decide(price_yes: float, proba: float, rules: Rules) -> tuple[str, float, fl
 
 
 def simulate(cands: pd.DataFrame, rules: Rules, label: str) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
-    """cands : market_id, date_decision, date_cloture, prix_j3, proba, resultat_yes."""
+    """cands : market_id, date_decision, date_cloture, prix, proba, resultat_yes."""
     cands = cands.sort_values("date_decision")
     cash = rules.bankroll
     peak = rules.bankroll
@@ -85,7 +85,7 @@ def simulate(cands: pd.DataFrame, rules: Rules, label: str) -> tuple[pd.DataFram
         settle(r.date_decision)
         if stopped_at is not None:
             break
-        d = decide(r.prix_j3, r.proba, rules)
+        d = decide(r.prix, r.proba, rules)
         if d is None:
             skipped["ecart_insuffisant"] += 1
             continue
@@ -104,7 +104,7 @@ def simulate(cands: pd.DataFrame, rules: Rules, label: str) -> tuple[pd.DataFram
         cash -= stake
         bet = {
             "strategie": label, "market_id": r.market_id, "date_entree": r.date_decision,
-            "date_cloture": r.date_cloture, "sens": side, "prix_yes": round(r.prix_j3, 4),
+            "date_cloture": r.date_cloture, "sens": side, "prix_yes": round(r.prix, 4),
             "prix_paye": round(cost, 4), "proba_estimee": round(r.proba, 4),
             "ecart_points": round((((r.proba if side == "YES" else 1 - r.proba) - cost) * 100), 2),
             "pct_cagnotte": round(stake / eq0, 4),
