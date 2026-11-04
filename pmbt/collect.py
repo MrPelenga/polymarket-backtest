@@ -59,29 +59,38 @@ def _as_list(v) -> list:
     return []
 
 
-def fetch_markets(max_pages: int = 1500, page_size: int = 100) -> list[dict]:
-    """Pagine sur les marchés clos de la période étudiée (l'API plafonne à 100 par page)."""
-    out: list[dict] = []
+def fetch_markets(max_pages: int = 3000, page_size: int = 100, max_offset: int = 1900) -> list[dict]:
+    """Récupère les marchés clos de la période, triés par date de fin.
+
+    L'API plafonne à 100 marchés par page et refuse un décalage (offset) au-delà de
+    ~2 000. On avance donc par fenêtres : une fois le décalage maximal atteint, la
+    fenêtre repart de la dernière date de fin reçue. Les doublons sont écartés par id.
+    """
+    seen: dict[str, dict] = {}
+    start, offset = C.END_MIN, 0
     for page in range(max_pages):
         params = {
-            "closed": "true",
-            "limit": page_size,
-            "offset": page * page_size,
-            "end_date_min": C.END_MIN,
-            "end_date_max": C.END_MAX,
-            "volume_num_min": C.MIN_VOLUME,
-            "order": "endDate",
-            "ascending": "true",
+            "closed": "true", "limit": page_size, "offset": offset,
+            "end_date_min": start, "end_date_max": C.END_MAX,
+            "volume_num_min": C.MIN_VOLUME, "order": "endDate", "ascending": "true",
         }
         batch = _get(C.GAMMA_URL, params)
         if isinstance(batch, dict):  # certaines versions de l'API enveloppent la liste
             batch = batch.get("data") or batch.get("markets") or []
-        if not batch:
-            break
-        out.extend(batch)
+        for m in batch:
+            seen[str(m.get("id"))] = m
         if page % 50 == 0:
-            log.info("Page %d : %d marchés (total %d)", page, len(batch), len(out))
-    return out
+            log.info("Page %d (depuis %s, décalage %d) : %d marchés uniques", page, start, offset, len(seen))
+        if len(batch) < page_size:
+            break
+        if offset + page_size <= max_offset:
+            offset += page_size
+            continue
+        last = max(m.get("endDate") or "" for m in batch)
+        if not last or last <= start:  # plus de 2 000 marchés à la même date : on avance d'une seconde
+            last = (pd.Timestamp(start) + pd.Timedelta(seconds=1)).isoformat()
+        start, offset = last, 0
+    return list(seen.values())
 
 
 def parse_market(m: dict) -> dict | None:

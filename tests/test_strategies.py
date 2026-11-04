@@ -60,3 +60,20 @@ def test_parse_market_accepts_team_matchups():
          "volumeNum": 9000}
     p = parse_market(m)
     assert p["resultat_yes"] == 1 and p["issue_1"] == "Lakers" and p["categorie"] == "Sport"
+
+
+def test_fetch_markets_slides_window_past_offset_cap(monkeypatch):
+    """L'API refuse les décalages > ~2 000 : la collecte doit repartir de la dernière date reçue."""
+    import pmbt.collect as col
+
+    days = pd.date_range("2025-01-01", periods=450, freq="D", tz="UTC")
+    universe = [{"id": i, "endDate": d.strftime("%Y-%m-%dT%H:%M:%SZ")} for i, d in enumerate(days.repeat(10))]
+
+    def fake_get(url, params):
+        assert params["offset"] <= 1900
+        rows = [m for m in universe if m["endDate"] >= params["end_date_min"]]
+        return rows[params["offset"]: params["offset"] + params["limit"]]
+
+    monkeypatch.setattr(col, "_get", fake_get)
+    got = col.fetch_markets()
+    assert len(got) == len(universe)
