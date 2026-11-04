@@ -19,6 +19,12 @@ with sync_playwright() as p:
                 pg.wait_for_timeout(1500)
                 slug = path.strip("/").replace("/", "_") or "home"
                 pg.screenshot(path=f"shots/{slug}_{name}_{theme}.png", full_page=True)
+                # Vignette du projet : haut du rapport, au format 16:9
+                rep = pg.locator("[data-pbi-report]")
+                if rep.count() and name == "desktop" and theme == "light":
+                    bb = rep.bounding_box()
+                    pg.screenshot(path="shots/card.png", full_page=True,
+                                  clip={"x": bb["x"], "y": bb["y"], "width": bb["width"], "height": bb["width"] * 9 / 16})
                 # Clic sur chaque onglet du tableau de bord, s'il y en a
                 tabs = pg.locator("[data-pbi-tab]")
                 for i in range(tabs.count()):
@@ -27,5 +33,10 @@ with sync_playwright() as p:
                     pg.screenshot(path=f"shots/{slug}_{name}_{theme}_tab{i}.png", full_page=True)
                 ow = pg.evaluate("document.documentElement.scrollWidth - window.innerWidth")
                 print(f"{path} {name} {theme}: debordement horizontal = {ow}px, erreurs = {errors}")
+            if name == "desktop" and theme == "light":
+                pg.goto(BASE + "/projets/7", wait_until="networkidle")
+                pg.get_by_role("button", name="EN").first.click()
+                pg.wait_for_timeout(800)
+                pg.screenshot(path="shots/projets_7_desktop_light_en.png", full_page=True)
             ctx.close()
     b.close()
