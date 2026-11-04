@@ -129,9 +129,14 @@ def run() -> None:
                      "ecart_max_points": round(float((t["freq_reelle"] - t["prix_moyen"]).abs().max() * 100), 1)
                      if len(t) else None})
 
+    # Courbe hebdomadaire prolongée jusqu'à la fin du test : une stratégie arrêtée reste à plat.
+    weeks = pd.date_range(C.TRAIN_END, C.END_MAX, freq="W", tz="UTC")
+
     def weekly(c: pd.DataFrame) -> list[dict]:
-        c = c.assign(date=pd.to_datetime(c["date"])).set_index("date")["cagnotte"].resample("W").last().ffill()
-        return [{"date": d.strftime("%Y-%m-%d"), "cagnotte": round(v, 2)} for d, v in c.items()]
+        s = c.assign(date=pd.to_datetime(c["date"], utc=True)).set_index("date")["cagnotte"].sort_index()
+        s = s.resample("W").last().reindex(weeks).ffill().fillna(C.BANKROLL)
+        start = [{"date": C.TRAIN_END, "cagnotte": C.BANKROLL}]
+        return start + [{"date": d.strftime("%Y-%m-%d"), "cagnotte": round(float(v), 2)} for d, v in s.items()]
 
     summary = {
         "collecte": collect_stats,
