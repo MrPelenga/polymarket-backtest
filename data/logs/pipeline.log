@@ -1,16 +1,19 @@
-2026-11-04 19:47:05,638 INFO Page 0 : 100 marchés (total 100)
-2026-11-04 19:47:05,718 INFO 100 marchés reçus, 61 binaires résolus et dans le périmètre
-2026-11-04 19:47:07,826 INFO Collecte terminée : {'marches_recus': 100, 'marches_binaires_resolus': 61, 'marches_echantillon': 61, 'historiques_en_echec': 0, 'historiques_avec_prix_j3': 36, 'date_extraction': '2026-11-04'}
-2026-11-04 19:47:07,832 INFO Marchés avec prix à J-3 : 36 (apprentissage 36, test 0)
+2026-11-04 19:48:40,254 INFO Page 0 : 100 marchés (total 100)
+2026-11-04 19:48:42,967 WARNING Erreur réseau (422 Client Error: Unknown for url: https://gamma-api.polymarket.com/markets?closed=true&limit=100&offset=2100&end_date_min=2025-01-01&end_date_max=2026-10-31&volume_num_min=5000&order=endDate&ascending=true), nouvel essai
+2026-11-04 19:48:44,074 WARNING Erreur réseau (422 Client Error: Unknown for url: https://gamma-api.polymarket.com/markets?closed=true&limit=100&offset=2100&end_date_min=2025-01-01&end_date_max=2026-10-31&volume_num_min=5000&order=endDate&ascending=true), nouvel essai
+2026-11-04 19:48:46,164 WARNING Erreur réseau (422 Client Error: Unknown for url: https://gamma-api.polymarket.com/markets?closed=true&limit=100&offset=2100&end_date_min=2025-01-01&end_date_max=2026-10-31&volume_num_min=5000&order=endDate&ascending=true), nouvel essai
+2026-11-04 19:48:50,254 WARNING Erreur réseau (422 Client Error: Unknown for url: https://gamma-api.polymarket.com/markets?closed=true&limit=100&offset=2100&end_date_min=2025-01-01&end_date_max=2026-10-31&volume_num_min=5000&order=endDate&ascending=true), nouvel essai
 Traceback (most recent call last):
-  File "/home/runner/work/polymarket-backtest/polymarket-backtest/run_pipeline.py", line 15, in <module>
-    backtest.run()
-  File "/home/runner/work/polymarket-backtest/polymarket-backtest/pmbt/backtest.py", line 85, in run
-    frame[col] = pd.to_datetime(frame[col], utc=True).dt.strftime("%Y-%m-%d %H:%M")
-                                ~~~~~^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/frame.py", line 4330, in __getitem__
-    indexer = self.columns.get_loc(key)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/indexes/range.py", line 549, in get_loc
-    raise KeyError(key)
-KeyError: 'date_entree'
+  File "/home/runner/work/polymarket-backtest/polymarket-backtest/run_pipeline.py", line 13, in <module>
+    collect.run()
+  File "/home/runner/work/polymarket-backtest/polymarket-backtest/pmbt/collect.py", line 160, in run
+    raw = fetch_markets()
+          ^^^^^^^^^^^^^^^
+  File "/home/runner/work/polymarket-backtest/polymarket-backtest/pmbt/collect.py", line 76, in fetch_markets
+    batch = _get(C.GAMMA_URL, params)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/polymarket-backtest/polymarket-backtest/pmbt/collect.py", line 41, in _get
+    r.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 422 Client Error: Unknown for url: https://gamma-api.polymarket.com/markets?closed=true&limit=100&offset=2100&end_date_min=2025-01-01&end_date_max=2026-10-31&volume_num_min=5000&order=endDate&ascending=true
