@@ -1,5 +1,5 @@
 strategie,estimateur,regles,description
 calibration,Calibration,Règles de l'article,Corrige le prix selon les écarts constatés par tranche de prix en 2025.
-calibration_kelly_plein,Calibration,"Kelly plein, sans garde-fous","Même estimation, mais mise de Kelly entière, sans plafond, ni limite, ni arrêt."
-momentum,Momentum,Règles de l'article,Prolonge la tendance du prix entre J-7 et J-3.
+momentum_kelly_plein,Momentum,"Kelly plein, sans garde-fous","Même estimation que Momentum, mais mise de Kelly entière, sans plafond, ni limite, ni arrêt."
+momentum,Momentum,Règles de l'article,Prolonge la tendance du prix entre J-2 et J-1.
 aleatoire,Aléatoire,Règles de l'article,"Pile ou face, mêmes règles de mise. Tirage médian sur 300."

@@ -1,5 +1,5 @@
 strategie,cagnotte_finale,roi_pct,nb_paris,taux_reussite_pct,drawdown_max_pct,plus_haut,arret_date,ignores_ecart_insuffisant,ignores_limite_paris_ouverts,ignores_mise_trop_faible
-calibration,50.0,0.0,0,,0.0,50.0,,480,0,0
-calibration_kelly_plein,50.0,0.0,0,,0.0,50.0,,480,0,0
-momentum,55.95,11.9,48,77.1,24.3,70.51,,426,6,0
-aleatoire,26.97,-46.1,18,33.3,49.8,50.0,2026-01-09,10,18,0
+calibration,50.0,0.0,0,,0.0,50.0,,2488,0,0
+momentum,43.62,-12.8,132,67.4,40.2,72.88,2026-03-04,1282,13,0
+momentum_kelly_plein,0.23,-99.5,97,67.0,99.7,78.25,,2260,0,131
+aleatoire,26.54,-46.9,28,35.7,48.4,51.41,2026-01-06,25,54,0

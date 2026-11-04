@@ -1,7 +1,8 @@
 {
   "marches_recus": 292322,
   "marches_binaires_resolus": 290783,
-  "marches_echantillon": 6000,
+  "marches_eligibles_duree": 115764,
+  "marches_echantillon": 10000,
   "marches_par_categorie": {
     "Crypto": 143526,
     "Sport": 89237,
@@ -12,7 +13,17 @@
     "Culture": 3901,
     "\u00c9conomie": 2649
   },
+  "eligibles_par_categorie": {
+    "Sport": 54426,
+    "Crypto": 23288,
+    "Politique": 9987,
+    "Autre": 8137,
+    "M\u00e9t\u00e9o": 7094,
+    "Tech & IA": 7068,
+    "Culture": 3561,
+    "\u00c9conomie": 2203
+  },
   "historiques_en_echec": 0,
-  "historiques_avec_prix_j3": 2856,
+  "historiques_avec_prix_j1": 9986,
   "date_extraction": "2026-11-04"
 }

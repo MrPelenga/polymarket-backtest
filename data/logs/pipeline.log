@@ -1,85 +1,91 @@
-2026-11-04 19:52:28,071 INFO Page 0 (depuis 2025-01-01, décalage 0) : 100 marchés uniques
-2026-11-04 19:52:33,740 INFO Page 50 (depuis 2025-02-23T12:00:00Z, décalage 1000) : 4798 marchés uniques
-2026-11-04 19:52:39,485 INFO Page 100 (depuis 2025-04-30T12:00:00Z, décalage 0) : 9667 marchés uniques
-2026-11-04 19:52:45,238 INFO Page 150 (depuis 2025-06-01T12:00:00Z, décalage 1000) : 14533 marchés uniques
-2026-11-04 19:52:50,997 INFO Page 200 (depuis 2025-07-06T00:00:00Z, décalage 0) : 19486 marchés uniques
-2026-11-04 19:52:56,854 INFO Page 250 (depuis 2025-07-30T00:00:00Z, décalage 1000) : 24433 marchés uniques
-2026-11-04 19:53:02,607 INFO Page 300 (depuis 2025-08-26T05:00:00Z, décalage 0) : 29421 marchés uniques
-2026-11-04 19:53:08,485 INFO Page 350 (depuis 2025-09-07T16:00:00Z, décalage 1000) : 34402 marchés uniques
-2026-11-04 19:53:16,068 INFO Page 400 (depuis 2025-09-25T15:00:00Z, décalage 0) : 39316 marchés uniques
-2026-11-04 19:53:16,073 WARNING HTTP 429, nouvel essai dans 1s
-2026-11-04 19:53:17,078 WARNING HTTP 429, nouvel essai dans 2s
-2026-11-04 19:53:19,082 WARNING HTTP 429, nouvel essai dans 4s
-2026-11-04 19:53:23,089 WARNING HTTP 429, nouvel essai dans 8s
-2026-11-04 19:53:31,097 WARNING HTTP 429, nouvel essai dans 16s
-2026-11-04 19:53:47,102 WARNING HTTP 429, nouvel essai dans 32s
-2026-11-04 19:54:31,576 INFO Page 450 (depuis 2025-10-05T14:15:00Z, décalage 1000) : 44311 marchés uniques
-2026-11-04 19:54:43,059 INFO Page 500 (depuis 2025-10-18T07:00:00Z, décalage 0) : 49266 marchés uniques
-2026-11-04 19:54:54,941 INFO Page 550 (depuis 2025-10-25T05:00:00Z, décalage 1000) : 54249 marchés uniques
-2026-11-04 19:55:07,424 INFO Page 600 (depuis 2025-11-02T02:30:00Z, décalage 0) : 59025 marchés uniques
-2026-11-04 19:55:19,569 INFO Page 650 (depuis 2025-11-07T15:00:00Z, décalage 1000) : 63977 marchés uniques
-2026-11-04 19:55:31,996 INFO Page 700 (depuis 2025-11-15T19:45:00Z, décalage 0) : 68960 marchés uniques
-2026-11-04 19:55:44,232 INFO Page 750 (depuis 2025-11-21T00:00:00Z, décalage 1000) : 73908 marchés uniques
-2026-11-04 19:55:56,545 INFO Page 800 (depuis 2025-11-28T14:00:00Z, décalage 0) : 78904 marchés uniques
-2026-11-04 19:56:08,063 INFO Page 850 (depuis 2025-12-02T01:15:00Z, décalage 1000) : 83865 marchés uniques
-2026-11-04 19:56:20,020 INFO Page 900 (depuis 2025-12-08T21:00:00Z, décalage 0) : 88689 marchés uniques
-2026-11-04 19:56:32,069 INFO Page 950 (depuis 2025-12-13T20:00:00Z, décalage 1000) : 93674 marchés uniques
-2026-11-04 19:56:43,587 INFO Page 1000 (depuis 2025-12-20T17:00:00Z, décalage 0) : 98527 marchés uniques
-2026-11-04 19:56:55,502 INFO Page 1050 (depuis 2025-12-25T05:30:00Z, décalage 1000) : 103421 marchés uniques
-2026-11-04 19:57:07,831 INFO Page 1100 (depuis 2025-12-31T00:00:00Z, décalage 0) : 108304 marchés uniques
-2026-11-04 19:57:19,496 INFO Page 1150 (depuis 2025-12-31T23:59:59Z, décalage 1000) : 112293 marchés uniques
-2026-11-04 19:57:31,220 INFO Page 1200 (depuis 2026-01-06T01:00:00Z, décalage 0) : 117264 marchés uniques
-2026-11-04 19:57:42,812 INFO Page 1250 (depuis 2026-01-10T00:00:00Z, décalage 1000) : 122051 marchés uniques
-2026-11-04 19:57:55,286 INFO Page 1300 (depuis 2026-01-14T22:00:00Z, décalage 0) : 126997 marchés uniques
-2026-11-04 19:58:07,578 INFO Page 1350 (depuis 2026-01-17T23:00:00Z, décalage 1000) : 131828 marchés uniques
-2026-11-04 19:58:19,594 INFO Page 1400 (depuis 2026-01-22T19:00:00Z, décalage 0) : 136764 marchés uniques
-2026-11-04 19:58:31,486 INFO Page 1450 (depuis 2026-01-25T14:00:00Z, décalage 1000) : 141759 marchés uniques
-2026-11-04 19:58:43,258 INFO Page 1500 (depuis 2026-01-30T02:00:00Z, décalage 0) : 146625 marchés uniques
-2026-11-04 19:58:55,143 INFO Page 1550 (depuis 2026-01-31T18:00:00Z, décalage 1000) : 150834 marchés uniques
-2026-11-04 19:59:07,391 INFO Page 1600 (depuis 2026-02-04T21:00:00Z, décalage 0) : 155810 marchés uniques
-2026-11-04 19:59:19,732 INFO Page 1650 (depuis 2026-02-07T17:30:00Z, décalage 1000) : 160794 marchés uniques
-2026-11-04 19:59:31,365 INFO Page 1700 (depuis 2026-02-11T21:00:00Z, décalage 0) : 165774 marchés uniques
-2026-11-04 19:59:43,046 INFO Page 1750 (depuis 2026-02-14T05:00:00Z, décalage 1000) : 170762 marchés uniques
-2026-11-04 19:59:56,057 INFO Page 1800 (depuis 2026-02-17T17:00:00Z, décalage 0) : 175658 marchés uniques
-2026-11-04 20:00:09,097 INFO Page 1850 (depuis 2026-02-20T00:00:00Z, décalage 1000) : 180585 marchés uniques
-2026-11-04 20:00:21,818 INFO Page 1900 (depuis 2026-02-22T17:00:00Z, décalage 0) : 185527 marchés uniques
-2026-11-04 20:00:33,838 INFO Page 1950 (depuis 2026-02-24T10:25:00Z, décalage 1000) : 190521 marchés uniques
-2026-11-04 20:00:46,337 INFO Page 2000 (depuis 2026-02-27T10:45:00Z, décalage 0) : 195497 marchés uniques
-2026-11-04 20:00:58,743 INFO Page 2050 (depuis 2026-02-28T14:30:00Z, décalage 1000) : 199928 marchés uniques
-2026-11-04 20:01:11,110 INFO Page 2100 (depuis 2026-03-03T00:50:00Z, décalage 0) : 204823 marchés uniques
-2026-11-04 20:01:23,271 INFO Page 2150 (depuis 2026-03-06T02:00:00Z, décalage 1000) : 209741 marchés uniques
-2026-11-04 20:01:37,129 INFO Page 2200 (depuis 2026-03-27T18:30:00Z, décalage 0) : 214728 marchés uniques
-2026-11-04 20:01:50,641 INFO Page 2250 (depuis 2026-03-29T12:00:00Z, décalage 1000) : 219466 marchés uniques
-2026-11-04 20:02:02,499 INFO Page 2300 (depuis 2026-03-31T12:00:00Z, décalage 0) : 224014 marchés uniques
-2026-11-04 20:02:14,635 INFO Page 2350 (depuis 2026-04-01T22:00:00Z, décalage 1000) : 228890 marchés uniques
-2026-11-04 20:02:26,684 INFO Page 2400 (depuis 2026-04-04T12:00:00Z, décalage 0) : 233774 marchés uniques
-2026-11-04 20:02:38,872 INFO Page 2450 (depuis 2026-04-05T23:30:00Z, décalage 1000) : 238617 marchés uniques
-2026-11-04 20:02:50,516 INFO Page 2500 (depuis 2026-04-08T12:45:00Z, décalage 0) : 243492 marchés uniques
-2026-11-04 20:03:02,069 INFO Page 2550 (depuis 2026-04-10T09:35:00Z, décalage 1000) : 248172 marchés uniques
-2026-11-04 20:03:14,921 INFO Page 2600 (depuis 2026-04-12T14:45:00Z, décalage 0) : 253119 marchés uniques
-2026-11-04 20:03:27,001 INFO Page 2650 (depuis 2026-04-14T09:25:00Z, décalage 1000) : 258114 marchés uniques
-2026-11-04 20:03:39,080 INFO Page 2700 (depuis 2026-04-17T02:45:00Z, décalage 0) : 263066 marchés uniques
-2026-11-04 20:03:51,457 INFO Page 2750 (depuis 2026-04-18T20:00:00Z, décalage 1000) : 268055 marchés uniques
-2026-11-04 20:04:04,913 INFO Page 2800 (depuis 2026-04-21T12:00:00Z, décalage 0) : 272699 marchés uniques
-2026-11-04 20:04:16,850 INFO Page 2850 (depuis 2026-04-23T07:50:00Z, décalage 1000) : 277693 marchés uniques
-2026-11-04 20:04:28,760 INFO Page 2900 (depuis 2026-04-26T00:00:00Z, décalage 0) : 282644 marchés uniques
-2026-11-04 20:04:40,828 INFO Page 2950 (depuis 2026-04-27T23:00:00Z, décalage 1000) : 287620 marchés uniques
-2026-11-04 20:07:22,276 INFO 292322 marchés reçus, 290783 binaires résolus et dans le périmètre
-2026-11-04 20:07:31,941 INFO Historiques : 500/6000
-2026-11-04 20:07:41,152 INFO Historiques : 1000/6000
-2026-11-04 20:07:50,355 INFO Historiques : 1500/6000
-2026-11-04 20:07:59,449 INFO Historiques : 2000/6000
-2026-11-04 20:08:08,605 INFO Historiques : 2500/6000
-2026-11-04 20:08:17,814 INFO Historiques : 3000/6000
-2026-11-04 20:08:26,963 INFO Historiques : 3500/6000
-2026-11-04 20:08:35,972 INFO Historiques : 4000/6000
-2026-11-04 20:08:44,883 INFO Historiques : 4500/6000
-2026-11-04 20:08:53,654 INFO Historiques : 5000/6000
-2026-11-04 20:09:02,487 INFO Historiques : 5500/6000
-2026-11-04 20:09:22,014 INFO Historiques : 6000/6000
-2026-11-04 20:09:22,079 INFO Collecte terminée : {'marches_recus': 292322, 'marches_binaires_resolus': 290783, 'marches_echantillon': 6000, 'marches_par_categorie': {'Crypto': 143526, 'Sport': 89237, 'Météo': 21123, 'Politique': 12569, 'Autre': 9641, 'Tech & IA': 8137, 'Culture': 3901, 'Économie': 2649}, 'historiques_en_echec': 0, 'historiques_avec_prix_j3': 2856, 'date_extraction': '2026-11-04'}
-2026-11-04 20:09:23,065 INFO Marchés avec prix à J-3 : 2856 (apprentissage 2376, test 480)
-2026-11-04 20:09:24,073 INFO {'strategie': 'calibration', 'cagnotte_finale': 50.0, 'roi_pct': 0.0, 'nb_paris': 0, 'taux_reussite_pct': None, 'drawdown_max_pct': 0.0, 'plus_haut': 50.0, 'arret_date': None, 'ignores_ecart_insuffisant': 480, 'ignores_limite_paris_ouverts': 0, 'ignores_mise_trop_faible': 0}
-2026-11-04 20:09:24,073 INFO {'strategie': 'calibration_kelly_plein', 'cagnotte_finale': 50.0, 'roi_pct': 0.0, 'nb_paris': 0, 'taux_reussite_pct': None, 'drawdown_max_pct': 0.0, 'plus_haut': 50.0, 'arret_date': None, 'ignores_ecart_insuffisant': 480, 'ignores_limite_paris_ouverts': 0, 'ignores_mise_trop_faible': 0}
-2026-11-04 20:09:24,073 INFO {'strategie': 'momentum', 'cagnotte_finale': 55.95, 'roi_pct': 11.9, 'nb_paris': 48, 'taux_reussite_pct': 77.1, 'drawdown_max_pct': 24.3, 'plus_haut': 70.51, 'arret_date': None, 'ignores_ecart_insuffisant': 426, 'ignores_limite_paris_ouverts': 6, 'ignores_mise_trop_faible': 0}
-2026-11-04 20:09:24,073 INFO {'strategie': 'aleatoire', 'cagnotte_finale': 26.97, 'roi_pct': -46.1, 'nb_paris': 18, 'taux_reussite_pct': 33.3, 'drawdown_max_pct': 49.8, 'plus_haut': 50.0, 'arret_date': '2026-01-09', 'ignores_ecart_insuffisant': 10, 'ignores_limite_paris_ouverts': 18, 'ignores_mise_trop_faible': 0}
+2026-11-04 20:11:41,715 INFO Page 0 (depuis 2025-01-01, décalage 0) : 100 marchés uniques
+2026-11-04 20:11:54,982 INFO Page 50 (depuis 2025-02-23T12:00:00Z, décalage 1000) : 4798 marchés uniques
+2026-11-04 20:12:08,735 INFO Page 100 (depuis 2025-04-30T12:00:00Z, décalage 0) : 9667 marchés uniques
+2026-11-04 20:12:21,616 INFO Page 150 (depuis 2025-06-01T12:00:00Z, décalage 1000) : 14533 marchés uniques
+2026-11-04 20:12:34,716 INFO Page 200 (depuis 2025-07-06T00:00:00Z, décalage 0) : 19486 marchés uniques
+2026-11-04 20:12:49,280 INFO Page 250 (depuis 2025-07-30T00:00:00Z, décalage 1000) : 24433 marchés uniques
+2026-11-04 20:13:02,819 INFO Page 300 (depuis 2025-08-26T05:00:00Z, décalage 0) : 29421 marchés uniques
+2026-11-04 20:13:16,353 INFO Page 350 (depuis 2025-09-07T16:00:00Z, décalage 1000) : 34402 marchés uniques
+2026-11-04 20:13:30,743 INFO Page 400 (depuis 2025-09-25T15:00:00Z, décalage 0) : 39316 marchés uniques
+2026-11-04 20:13:44,039 INFO Page 450 (depuis 2025-10-05T14:15:00Z, décalage 1000) : 44311 marchés uniques
+2026-11-04 20:13:57,760 INFO Page 500 (depuis 2025-10-18T07:00:00Z, décalage 0) : 49266 marchés uniques
+2026-11-04 20:14:10,852 INFO Page 550 (depuis 2025-10-25T05:00:00Z, décalage 1000) : 54249 marchés uniques
+2026-11-04 20:14:24,452 INFO Page 600 (depuis 2025-11-02T02:30:00Z, décalage 0) : 59025 marchés uniques
+2026-11-04 20:14:38,823 INFO Page 650 (depuis 2025-11-07T15:00:00Z, décalage 1000) : 63977 marchés uniques
+2026-11-04 20:14:52,196 INFO Page 700 (depuis 2025-11-15T19:45:00Z, décalage 0) : 68960 marchés uniques
+2026-11-04 20:15:05,947 INFO Page 750 (depuis 2025-11-21T00:00:00Z, décalage 1000) : 73908 marchés uniques
+2026-11-04 20:15:20,111 INFO Page 800 (depuis 2025-11-28T14:00:00Z, décalage 0) : 78904 marchés uniques
+2026-11-04 20:15:33,494 INFO Page 850 (depuis 2025-12-02T01:15:00Z, décalage 1000) : 83865 marchés uniques
+2026-11-04 20:15:47,059 INFO Page 900 (depuis 2025-12-08T21:00:00Z, décalage 0) : 88689 marchés uniques
+2026-11-04 20:15:59,952 INFO Page 950 (depuis 2025-12-13T20:00:00Z, décalage 1000) : 93674 marchés uniques
+2026-11-04 20:16:13,174 INFO Page 1000 (depuis 2025-12-20T17:00:00Z, décalage 0) : 98527 marchés uniques
+2026-11-04 20:16:28,657 INFO Page 1050 (depuis 2025-12-25T05:30:00Z, décalage 1000) : 103421 marchés uniques
+2026-11-04 20:16:42,148 INFO Page 1100 (depuis 2025-12-31T00:00:00Z, décalage 0) : 108304 marchés uniques
+2026-11-04 20:16:54,911 INFO Page 1150 (depuis 2025-12-31T23:59:59Z, décalage 1000) : 112293 marchés uniques
+2026-11-04 20:17:07,828 INFO Page 1200 (depuis 2026-01-06T01:00:00Z, décalage 0) : 117264 marchés uniques
+2026-11-04 20:17:21,552 INFO Page 1250 (depuis 2026-01-10T00:00:00Z, décalage 1000) : 122051 marchés uniques
+2026-11-04 20:17:35,974 INFO Page 1300 (depuis 2026-01-14T22:00:00Z, décalage 0) : 126997 marchés uniques
+2026-11-04 20:17:50,153 INFO Page 1350 (depuis 2026-01-17T23:00:00Z, décalage 1000) : 131828 marchés uniques
+2026-11-04 20:18:04,413 INFO Page 1400 (depuis 2026-01-22T19:00:00Z, décalage 0) : 136764 marchés uniques
+2026-11-04 20:18:18,004 INFO Page 1450 (depuis 2026-01-25T14:00:00Z, décalage 1000) : 141759 marchés uniques
+2026-11-04 20:18:31,265 INFO Page 1500 (depuis 2026-01-30T02:00:00Z, décalage 0) : 146625 marchés uniques
+2026-11-04 20:18:44,794 INFO Page 1550 (depuis 2026-01-31T18:00:00Z, décalage 1000) : 150834 marchés uniques
+2026-11-04 20:18:58,563 INFO Page 1600 (depuis 2026-02-04T21:00:00Z, décalage 0) : 155810 marchés uniques
+2026-11-04 20:19:11,673 INFO Page 1650 (depuis 2026-02-07T17:30:00Z, décalage 1000) : 160794 marchés uniques
+2026-11-04 20:19:24,966 INFO Page 1700 (depuis 2026-02-11T21:00:00Z, décalage 0) : 165774 marchés uniques
+2026-11-04 20:19:37,990 INFO Page 1750 (depuis 2026-02-14T05:00:00Z, décalage 1000) : 170762 marchés uniques
+2026-11-04 20:19:52,091 INFO Page 1800 (depuis 2026-02-17T17:00:00Z, décalage 0) : 175658 marchés uniques
+2026-11-04 20:20:05,457 INFO Page 1850 (depuis 2026-02-20T00:00:00Z, décalage 1000) : 180585 marchés uniques
+2026-11-04 20:20:19,511 INFO Page 1900 (depuis 2026-02-22T17:00:00Z, décalage 0) : 185527 marchés uniques
+2026-11-04 20:20:33,928 INFO Page 1950 (depuis 2026-02-24T10:25:00Z, décalage 1000) : 190521 marchés uniques
+2026-11-04 20:20:47,248 INFO Page 2000 (depuis 2026-02-27T10:45:00Z, décalage 0) : 195497 marchés uniques
+2026-11-04 20:21:00,900 INFO Page 2050 (depuis 2026-02-28T14:30:00Z, décalage 1000) : 199928 marchés uniques
+2026-11-04 20:21:14,035 INFO Page 2100 (depuis 2026-03-03T00:50:00Z, décalage 0) : 204823 marchés uniques
+2026-11-04 20:21:28,671 INFO Page 2150 (depuis 2026-03-06T02:00:00Z, décalage 1000) : 209741 marchés uniques
+2026-11-04 20:21:44,108 INFO Page 2200 (depuis 2026-03-27T18:30:00Z, décalage 0) : 214728 marchés uniques
+2026-11-04 20:21:58,387 INFO Page 2250 (depuis 2026-03-29T12:00:00Z, décalage 1000) : 219466 marchés uniques
+2026-11-04 20:22:12,229 INFO Page 2300 (depuis 2026-03-31T12:00:00Z, décalage 0) : 224014 marchés uniques
+2026-11-04 20:22:25,264 INFO Page 2350 (depuis 2026-04-01T22:00:00Z, décalage 1000) : 228890 marchés uniques
+2026-11-04 20:22:39,842 INFO Page 2400 (depuis 2026-04-04T12:00:00Z, décalage 0) : 233774 marchés uniques
+2026-11-04 20:22:53,618 INFO Page 2450 (depuis 2026-04-05T23:30:00Z, décalage 1000) : 238617 marchés uniques
+2026-11-04 20:23:06,931 INFO Page 2500 (depuis 2026-04-08T12:45:00Z, décalage 0) : 243492 marchés uniques
+2026-11-04 20:23:19,994 INFO Page 2550 (depuis 2026-04-10T09:35:00Z, décalage 1000) : 248172 marchés uniques
+2026-11-04 20:23:34,310 INFO Page 2600 (depuis 2026-04-12T14:45:00Z, décalage 0) : 253119 marchés uniques
+2026-11-04 20:23:48,128 INFO Page 2650 (depuis 2026-04-14T09:25:00Z, décalage 1000) : 258114 marchés uniques
+2026-11-04 20:24:01,350 INFO Page 2700 (depuis 2026-04-17T02:45:00Z, décalage 0) : 263066 marchés uniques
+2026-11-04 20:24:15,590 INFO Page 2750 (depuis 2026-04-18T20:00:00Z, décalage 1000) : 268055 marchés uniques
+2026-11-04 20:24:30,125 INFO Page 2800 (depuis 2026-04-21T12:00:00Z, décalage 0) : 272699 marchés uniques
+2026-11-04 20:24:43,619 INFO Page 2850 (depuis 2026-04-23T07:50:00Z, décalage 1000) : 277693 marchés uniques
+2026-11-04 20:24:57,345 INFO Page 2900 (depuis 2026-04-26T00:00:00Z, décalage 0) : 282644 marchés uniques
+2026-11-04 20:25:11,811 INFO Page 2950 (depuis 2026-04-27T23:00:00Z, décalage 1000) : 287620 marchés uniques
+2026-11-04 20:28:59,656 INFO 292322 marchés reçus, 290783 binaires résolus et dans le périmètre
+2026-11-04 20:28:59,683 INFO 115764 marchés ouverts au moins 2.5 jours
+2026-11-04 20:29:15,201 INFO Historiques : 500/10000
+2026-11-04 20:29:29,802 INFO Historiques : 1000/10000
+2026-11-04 20:29:36,392 WARNING Erreur réseau (HTTPSConnectionPool(host='clob.polymarket.com', port=443): Read timed out. (read timeout=30)), nouvel essai
+2026-11-04 20:29:42,679 INFO Historiques : 1500/10000
+2026-11-04 20:29:54,066 INFO Historiques : 2000/10000
+2026-11-04 20:30:05,697 INFO Historiques : 2500/10000
+2026-11-04 20:30:17,647 INFO Historiques : 3000/10000
+2026-11-04 20:30:29,327 INFO Historiques : 3500/10000
+2026-11-04 20:30:41,295 INFO Historiques : 4000/10000
+2026-11-04 20:30:52,903 INFO Historiques : 4500/10000
+2026-11-04 20:31:04,376 INFO Historiques : 5000/10000
+2026-11-04 20:31:16,054 INFO Historiques : 5500/10000
+2026-11-04 20:31:27,429 INFO Historiques : 6000/10000
+2026-11-04 20:31:39,002 INFO Historiques : 6500/10000
+2026-11-04 20:31:50,341 INFO Historiques : 7000/10000
+2026-11-04 20:32:01,744 INFO Historiques : 7500/10000
+2026-11-04 20:32:13,238 INFO Historiques : 8000/10000
+2026-11-04 20:32:24,590 INFO Historiques : 8500/10000
+2026-11-04 20:32:37,296 INFO Historiques : 9000/10000
+2026-11-04 20:32:50,176 INFO Historiques : 9500/10000
+2026-11-04 20:32:56,801 WARNING Erreur réseau (HTTPSConnectionPool(host='clob.polymarket.com', port=443): Read timed out. (read timeout=30)), nouvel essai
+2026-11-04 20:32:58,024 WARNING HTTP 500, nouvel essai dans 2s
+2026-11-04 20:33:02,837 INFO Historiques : 10000/10000
+2026-11-04 20:33:02,977 INFO Collecte terminée : {'marches_recus': 292322, 'marches_binaires_resolus': 290783, 'marches_eligibles_duree': 115764, 'marches_echantillon': 10000, 'marches_par_categorie': {'Crypto': 143526, 'Sport': 89237, 'Météo': 21123, 'Politique': 12569, 'Autre': 9641, 'Tech & IA': 8137, 'Culture': 3901, 'Économie': 2649}, 'eligibles_par_categorie': {'Sport': 54426, 'Crypto': 23288, 'Politique': 9987, 'Autre': 8137, 'Météo': 7094, 'Tech & IA': 7068, 'Culture': 3561, 'Économie': 2203}, 'historiques_en_echec': 0, 'historiques_avec_prix_j1': 9986, 'date_extraction': '2026-11-04'}
+2026-11-04 20:33:04,001 INFO Marchés avec un prix au moment de la décision : 9986 (apprentissage 7498, test 2488)
+2026-11-04 20:33:05,489 INFO {'strategie': 'calibration', 'cagnotte_finale': 50.0, 'roi_pct': 0.0, 'nb_paris': 0, 'taux_reussite_pct': None, 'drawdown_max_pct': 0.0, 'plus_haut': 50.0, 'arret_date': None, 'ignores_ecart_insuffisant': 2488, 'ignores_limite_paris_ouverts': 0, 'ignores_mise_trop_faible': 0}
+2026-11-04 20:33:05,490 INFO {'strategie': 'momentum', 'cagnotte_finale': 43.62, 'roi_pct': -12.8, 'nb_paris': 132, 'taux_reussite_pct': 67.4, 'drawdown_max_pct': 40.2, 'plus_haut': 72.88, 'arret_date': '2026-03-04', 'ignores_ecart_insuffisant': 1282, 'ignores_limite_paris_ouverts': 13, 'ignores_mise_trop_faible': 0}
+2026-11-04 20:33:05,490 INFO {'strategie': 'momentum_kelly_plein', 'cagnotte_finale': 0.23, 'roi_pct': -99.5, 'nb_paris': 97, 'taux_reussite_pct': 67.0, 'drawdown_max_pct': 99.7, 'plus_haut': 78.25, 'arret_date': None, 'ignores_ecart_insuffisant': 2260, 'ignores_limite_paris_ouverts': 0, 'ignores_mise_trop_faible': 131}
+2026-11-04 20:33:05,490 INFO {'strategie': 'aleatoire', 'cagnotte_finale': 26.54, 'roi_pct': -46.9, 'nb_paris': 28, 'taux_reussite_pct': 35.7, 'drawdown_max_pct': 48.4, 'plus_haut': 51.41, 'arret_date': '2026-01-06', 'ignores_ecart_insuffisant': 25, 'ignores_limite_paris_ouverts': 54, 'ignores_mise_trop_faible': 0}
