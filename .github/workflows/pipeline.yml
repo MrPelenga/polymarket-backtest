@@ -5,7 +5,8 @@ name: Pipeline
 on:
   push:
     branches: [main]
-    paths: ["pmbt/**", "run_pipeline.py", "requirements.txt", ".github/workflows/pipeline.yml"]
+    # Le module Manifold a son propre workflow quotidien : le modifier ne relance pas la collecte Polymarket (≈ 40 min).
+    paths: ["pmbt/**", "!pmbt/manifold.py", "run_pipeline.py", "requirements.txt", ".github/workflows/pipeline.yml"]
   workflow_dispatch:
     inputs:
       step:

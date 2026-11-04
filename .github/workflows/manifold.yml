@@ -1,0 +1,45 @@
+name: Manifold (quotidien)
+
+# Contre-épreuve Manifold : collecte des nouveaux marchés résolus une fois par jour.
+# Les tests passent d'abord, dont un appel réel à l'API pour vérifier que ses champs
+# n'ont pas changé ; s'ils échouent, rien n'est publié et les données de la veille restent.
+on:
+  schedule:
+    - cron: "17 5 * * *"   # chaque jour à 5 h 17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publication-donnees
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Tests (dont l'API réelle)
+        env:
+          MANIFOLD_LIVE: "1"
+        run: python -m pytest -q tests/test_manifold.py tests/test_manifold_live.py
+      - name: Collecte Manifold
+        run: |
+          mkdir -p data/logs
+          set -o pipefail
+          python -m pmbt.manifold 2>&1 | tee data/logs/manifold.log
+      - name: Publier les données dans le repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/manifold data/powerbi/manifold_*.csv data/logs/manifold.log
+          git diff --cached --quiet || git commit -m "Données Manifold : mise à jour quotidienne [skip ci]"
+          git pull --rebase origin main
+          git push

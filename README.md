@@ -53,6 +53,18 @@ Ce qu'on en retient :
 
 Ces résultats ne prouvent pas qu'aucune IA ne peut battre le marché. Ils montrent que les règles de mise de l'article ne créent pas d'avantage à elles seules, et qu'un avantage de 8 points est rare sur des marchés aussi bien calibrés.
 
+## Contre-épreuve Manifold (mise à jour quotidienne)
+
+Polymarket est-il bien calibré parce que de l'argent réel est en jeu ? Pour le vérifier, le module `pmbt/manifold.py` applique la même mesure à [Manifold Markets](https://manifold.markets), un marché de prédiction en monnaie fictive, accessible depuis la France.
+
+- **Données** : les marchés binaires résolus Oui/Non depuis le 1ᵉʳ janvier 2026 (même période de test que Polymarket), suivis par au moins 10 parieurs et ouverts au moins 2,5 jours. Les résolutions annulées (`CANCEL`) sont écartées.
+- **Prix à J-1** : la probabilité affichée après le dernier pari placé 24 h avant la clôture, comme pour Polymarket.
+- **Mise à jour** : le workflow `Manifold (quotidien)` tourne chaque matin. Il ne collecte que les nouveaux marchés (`data/manifold/marches.csv` sert de cache) et reste sous la limite de l'API (500 appels/min).
+- **Robustesse** : un test appelle la vraie API avant chaque passage pour vérifier que ses champs n'ont pas changé. Si l'API ne répond pas, les données de la veille restent publiées et `data/manifold/summary.json` l'indique (`statut`, `derniere_reussite`).
+- **Sorties** : `data/manifold/summary.json` pour le portfolio, `data/powerbi/manifold_marches.csv` et `manifold_calibration.csv` pour Power BI.
+
+Données : Manifold Markets, API publique sans clé, utilisée à titre personnel et non commercial.
+
 ## Lancer le projet
 
 ```bash
@@ -60,6 +72,8 @@ pip install -r requirements.txt
 python -m pytest -q            # tests des règles de mise et des estimateurs
 python run_pipeline.py all     # collecte (≈ 40 min) puis backtest
 python run_pipeline.py backtest  # backtest seul, sur les données déjà collectées
+python -m pmbt.manifold          # contre-épreuve Manifold (incrémentale)
+MANIFOLD_LIVE=1 python -m pytest tests/test_manifold_live.py -q  # vérifie l'API Manifold réelle
 ```
 
 Le pipeline tourne aussi sur GitHub Actions à chaque modification du code : tests, collecte, backtest, puis publication des données dans `data/`.
