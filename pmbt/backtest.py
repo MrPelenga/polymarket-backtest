@@ -112,11 +112,22 @@ def run() -> None:
               .apply(lambda g: pd.Series({"n": len(g), "brier": round(brier(g["prix"], g["resultat_yes"]), 4),
                                           "part_yes": round(g["resultat_yes"].mean(), 3)}), include_groups=False)
               .reset_index().sort_values("n", ascending=False))
-    cal_bets = runs["calibration"][0]
-    cal_by_cat = (cal_bets.merge(df[["market_id", "categorie"]], on="market_id")
-                  .groupby("categorie").agg(nb_paris=("gain", "size"), gain=("gain", "sum"), mise=("mise", "sum"),
-                                            reussite=("gagne", "mean")).reset_index()
-                  if len(cal_bets) else pd.DataFrame())
+    # Paris par stratégie et par catégorie : le rendement par dollar misé ne dépend pas
+    # de la taille de la cagnotte, on peut donc comparer les catégories entre elles.
+    all_bets = pd.concat([r[0] for r in runs.values()], ignore_index=True)
+    by_cat_bets = (all_bets.merge(df[["market_id", "categorie"]], on="market_id")
+                   .groupby(["strategie", "categorie"])
+                   .agg(nb_paris=("gain", "size"), gain=("gain", "sum"), mise=("mise", "sum"), reussite=("gagne", "mean"))
+                   .reset_index())
+    # Plus grand écart de calibration par catégorie sur 2026 (tranches d'au moins 30 marchés) :
+    # c'est l'avantage maximal qu'une correction statistique aurait pu exploiter.
+    gaps = []
+    for cat, g in test.groupby("categorie"):
+        t = calibration_table(g)
+        t = t[t["n"] >= 30]
+        gaps.append({"categorie": cat, "n_test": len(g),
+                     "ecart_max_points": round(float((t["freq_reelle"] - t["prix_moyen"]).abs().max() * 100), 1)
+                     if len(t) else None})
 
     def weekly(c: pd.DataFrame) -> list[dict]:
         c = c.assign(date=pd.to_datetime(c["date"])).set_index("date")["cagnotte"].resample("W").last().ffill()
@@ -134,7 +145,9 @@ def run() -> None:
         "calibration_apprentissage": table[["tranche", "n", "prix_moyen", "freq_reelle", "ecart"]]
         .round(4).to_dict("records"),
         "categories": by_cat.to_dict("records"),
-        "calibration_par_categorie": cal_by_cat.round(3).to_dict("records"),
+        "paris_par_categorie": by_cat_bets.round(3).to_dict("records"),
+        "ecarts_calibration_test": gaps,
+        "brier_test": round(brier(test["prix"], test["resultat_yes"]), 4),
         "aleatoire": {
             "tirages": C.RANDOM_RUNS,
             "mediane": float(dist["cagnotte_finale"].median()),
