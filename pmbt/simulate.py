@@ -27,6 +27,10 @@ class Rules:
     max_entry_price: float = C.MAX_ENTRY_PRICE
 
 
+BET_COLUMNS = ["strategie", "market_id", "date_entree", "date_cloture", "sens", "prix_yes", "prix_paye",
+               "proba_estimee", "ecart_points", "pct_cagnotte", "mise", "resultat_yes", "gagne", "gain",
+               "cagnotte_apres"]
+
 ARTICLE = Rules()
 FULL_KELLY = Rules(kelly_fraction=1.0, max_stake_pct=None, max_open=None, stop_drawdown=None)
 
@@ -112,7 +116,7 @@ def simulate(cands: pd.DataFrame, rules: Rules, label: str) -> tuple[pd.DataFram
     # Les paris encore ouverts au moment d'un arrêt sont laissés aller à leur terme.
     settle(pd.Timestamp.max.tz_localize("UTC"))
 
-    bets_df = pd.DataFrame(bets)
+    bets_df = pd.DataFrame(bets, columns=BET_COLUMNS)
     curve_df = pd.DataFrame(curve).assign(strategie=label)
     final = float(curve_df["cagnotte"].iloc[-1])
     running_peak = curve_df["cagnotte"].cummax()

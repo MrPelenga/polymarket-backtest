@@ -1,0 +1,24 @@
+{
+  "name": "Backtest Polymarket",
+  "dataColors": ["#2563EB", "#0EA5A4", "#F59E0B", "#94A3B8", "#DC2626", "#7C3AED", "#16A34A", "#DB2777"],
+  "background": "#FFFFFF",
+  "foreground": "#0F172A",
+  "tableAccent": "#2563EB",
+  "good": "#16A34A",
+  "bad": "#DC2626",
+  "neutral": "#94A3B8",
+  "textClasses": {
+    "title": { "fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#0F172A" },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#475569" },
+    "callout": { "fontFace": "Segoe UI Semibold", "fontSize": 28, "color": "#0F172A" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "border": [{ "show": true, "color": { "solid": { "color": "#E2E8F0" } }, "radius": 8 }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "page": { "*": { "background": [{ "color": { "solid": { "color": "#F8FAFC" } }, "transparency": 0 }] } }
+  }
+}

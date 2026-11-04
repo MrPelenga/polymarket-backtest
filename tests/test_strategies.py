@@ -51,4 +51,12 @@ def test_parse_market_rejects_unresolved_and_multi():
     base = {"id": 1, "question": "q", "clobTokenIds": '["1","2"]', "endDate": "2026-03-01T00:00:00Z",
             "volumeNum": 12000}
     assert parse_market({**base, "outcomes": '["Yes","No"]', "outcomePrices": '["0.5","0.5"]'}) is None
-    assert parse_market({**base, "outcomes": '["A","B"]', "outcomePrices": '["1","0"]'}) is None
+    assert parse_market({**base, "outcomes": '["A","B","C"]', "outcomePrices": '["1","0","0"]'}) is None
+
+
+def test_parse_market_accepts_team_matchups():
+    m = {"id": 2, "question": "Lakers vs. Celtics", "outcomes": '["Lakers","Celtics"]',
+         "outcomePrices": '["1","0"]', "clobTokenIds": '["1","2"]', "endDate": "2026-03-01T00:00:00Z",
+         "volumeNum": 9000}
+    p = parse_market(m)
+    assert p["resultat_yes"] == 1 and p["issue_1"] == "Lakers" and p["categorie"] == "Sport"

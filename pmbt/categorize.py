@@ -14,8 +14,8 @@ RULES: list[tuple[str, list[str]]] = [
     ]),
     ("Crypto", [
         r"bitcoin", r"\bbtc\b", r"ethereum", r"\beth\b", r"solana", r"\bsol\b", r"\bxrp\b",
-        r"dogecoin", r"\bdoge\b", r"crypto", r"\btoken\b", r"memecoin", r"binance", r"coinbase",
-        r"stablecoin", r"\bfdv\b", r"airdrop", r"\busdt\b", r"\busdc\b", r"\bbnb\b", r"cardano",
+        r"dogecoin", r"crypto", r"\btoken\b", r"memecoin", r"binance", r"coinbase",
+        r"stablecoin", r"\bfdv\b", r"airdrop", r"\busdt\b", r"\busdc\b", r"\bbnb\b", r"cardano", r"ripple", r"hyperliquid", r"pump\.?fun", r"microstrategy",
     ]),
     ("Économie", [
         r"\bfed\b", r"interest rate", r"\brates?\b.*(cut|hike)", r"inflation", r"\bcpi\b", r"\bgdp\b",
@@ -27,7 +27,7 @@ RULES: list[tuple[str, list[str]]] = [
         r"governor", r"mayor", r"parliament", r"prime minister", r"\bvote\b", r"\bpoll", r"minister",
         r"democrat", r"republican", r"impeach", r"supreme court", r"\bnato\b", r"ukraine", r"russia",
         r"israel", r"gaza", r"iran", r"china", r"ceasefire", r"executive order", r"white house",
-        r"macron", r"putin", r"zelensky", r"netanyahu", r"pope",
+        r"macron", r"putin", r"zelensky", r"netanyahu", r"pope", r"speaker", r"cabinet", r"deport", r"doge\b.*(cut|spend)", r"government shutdown",
     ]),
     ("Sport", [
         r"\bvs\.?\b", r"\bnba\b", r"\bnfl\b", r"\bnhl\b", r"\bmlb\b", r"\bufc\b", r"premier league",
@@ -35,7 +35,7 @@ RULES: list[tuple[str, list[str]]] = [
         r"super bowl", r"stanley cup", r"grand slam", r"wimbledon", r"roland", r"open\b.*(win|champion)",
         r"\bf1\b", r"formula 1", r"grand prix", r"tennis", r"golf", r"masters", r"\bwin the\b.*(cup|title|championship|series)",
         r"\bfc\b", r"o/u", r"over/under", r"spread", r"\bmvp\b", r"playoffs?", r"\bmatch\b", r"\bgame \d",
-        r"cricket", r"boxing", r"esports", r"\blol\b", r"counter-strike", r"\bcs2\b", r"dota",
+        r"cricket", r"boxing", r"esports", r"\bepl\b", r"\bnba\b", r"hole in one", r"\bleague\b", r"\bseason\b", r"touchdown", r"\bgoals?\b", r"\blol\b", r"counter-strike", r"\bcs2\b", r"dota",
     ]),
     ("Tech & IA", [
         r"\bai\b", r"openai", r"chatgpt", r"\bgpt", r"gemini", r"claude", r"anthropic", r"grok",

@@ -59,8 +59,8 @@ def _as_list(v) -> list:
     return []
 
 
-def fetch_markets(max_pages: int = 400, page_size: int = 500) -> list[dict]:
-    """Pagine sur les marchés clos de la période étudiée."""
+def fetch_markets(max_pages: int = 1500, page_size: int = 100) -> list[dict]:
+    """Pagine sur les marchés clos de la période étudiée (l'API plafonne à 100 par page)."""
     out: list[dict] = []
     for page in range(max_pages):
         params = {
@@ -79,18 +79,21 @@ def fetch_markets(max_pages: int = 400, page_size: int = 500) -> list[dict]:
         if not batch:
             break
         out.extend(batch)
-        log.info("Page %d : %d marchés (total %d)", page, len(batch), len(out))
-        if len(batch) < page_size:
-            break
+        if page % 50 == 0:
+            log.info("Page %d : %d marchés (total %d)", page, len(batch), len(out))
     return out
 
 
 def parse_market(m: dict) -> dict | None:
-    """Garde un marché seulement s'il est binaire (Yes/No) et clairement résolu."""
-    outcomes = [str(o).strip().lower() for o in _as_list(m.get("outcomes"))]
+    """Garde un marché seulement s'il a deux issues et qu'il est clairement résolu.
+
+    La plupart des marchés sont en Oui/Non ; les matchs (« A vs. B ») ont le nom des
+    équipes. Dans les deux cas, la première issue joue le rôle du « Oui ».
+    """
+    outcomes = [str(o).strip() for o in _as_list(m.get("outcomes"))]
     prices = [float(p) for p in _as_list(m.get("outcomePrices")) if p not in (None, "")]
     tokens = _as_list(m.get("clobTokenIds"))
-    if outcomes != ["yes", "no"] or len(prices) != 2 or len(tokens) != 2:
+    if len(outcomes) != 2 or len(prices) != 2 or len(tokens) != 2:
         return None
     if max(prices) < 0.99:  # résultat non tranché (annulé, 50/50…)
         return None
@@ -121,6 +124,8 @@ def parse_market(m: dict) -> dict | None:
         "categorie": categorize(f"{question} {event_title}"),
         "date_cloture": ref,
         "volume": round(volume, 2),
+        "issue_1": outcomes[0],
+        "issue_2": outcomes[1],
         "resultat_yes": int(prices[0] > 0.5),
         "token_yes": str(tokens[0]),
     }
