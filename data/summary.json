@@ -1,0 +1,414 @@
+{
+  "collecte": {
+    "marches_recus": 292322,
+    "marches_binaires_resolus": 290783,
+    "marches_echantillon": 6000,
+    "marches_par_categorie": {
+      "Crypto": 143526,
+      "Sport": 89237,
+      "Météo": 21123,
+      "Politique": 12569,
+      "Autre": 9641,
+      "Tech & IA": 8137,
+      "Culture": 3901,
+      "Économie": 2649
+    },
+    "historiques_en_echec": 0,
+    "historiques_avec_prix_j3": 2856,
+    "date_extraction": "2026-11-04"
+  },
+  "periodes": {
+    "apprentissage": "2025-01-01 → 2026-01-01",
+    "test": "2026-01-01 → 2026-10-31"
+  },
+  "volumes": {
+    "marches_avec_prix": 2856,
+    "apprentissage": 2376,
+    "test": 480
+  },
+  "brier_marche_j3": 0.1291,
+  "resultats": [
+    {
+      "strategie": "calibration",
+      "cagnotte_finale": 50.0,
+      "roi_pct": 0.0,
+      "nb_paris": 0,
+      "taux_reussite_pct": null,
+      "drawdown_max_pct": 0.0,
+      "plus_haut": 50.0,
+      "arret_date": null,
+      "ignores_ecart_insuffisant": 480,
+      "ignores_limite_paris_ouverts": 0,
+      "ignores_mise_trop_faible": 0
+    },
+    {
+      "strategie": "calibration_kelly_plein",
+      "cagnotte_finale": 50.0,
+      "roi_pct": 0.0,
+      "nb_paris": 0,
+      "taux_reussite_pct": null,
+      "drawdown_max_pct": 0.0,
+      "plus_haut": 50.0,
+      "arret_date": null,
+      "ignores_ecart_insuffisant": 480,
+      "ignores_limite_paris_ouverts": 0,
+      "ignores_mise_trop_faible": 0
+    },
+    {
+      "strategie": "momentum",
+      "cagnotte_finale": 55.95,
+      "roi_pct": 11.9,
+      "nb_paris": 48,
+      "taux_reussite_pct": 77.1,
+      "drawdown_max_pct": 24.3,
+      "plus_haut": 70.51,
+      "arret_date": null,
+      "ignores_ecart_insuffisant": 426,
+      "ignores_limite_paris_ouverts": 6,
+      "ignores_mise_trop_faible": 0
+    },
+    {
+      "strategie": "aleatoire",
+      "cagnotte_finale": 26.97,
+      "roi_pct": -46.1,
+      "nb_paris": 18,
+      "taux_reussite_pct": 33.3,
+      "drawdown_max_pct": 49.8,
+      "plus_haut": 50.0,
+      "arret_date": "2026-01-09",
+      "ignores_ecart_insuffisant": 10,
+      "ignores_limite_paris_ouverts": 18,
+      "ignores_mise_trop_faible": 0
+    }
+  ],
+  "courbes": {
+    "calibration": [
+      {
+        "date": "2026-01-04",
+        "cagnotte": 50.0
+      }
+    ],
+    "calibration_kelly_plein": [
+      {
+        "date": "2026-01-04",
+        "cagnotte": 50.0
+      }
+    ],
+    "momentum": [
+      {
+        "date": "2026-01-04",
+        "cagnotte": 49.42
+      },
+      {
+        "date": "2026-01-11",
+        "cagnotte": 53.54
+      },
+      {
+        "date": "2026-01-18",
+        "cagnotte": 55.57
+      },
+      {
+        "date": "2026-01-25",
+        "cagnotte": 57.43
+      },
+      {
+        "date": "2026-02-01",
+        "cagnotte": 60.42
+      },
+      {
+        "date": "2026-02-08",
+        "cagnotte": 62.19
+      },
+      {
+        "date": "2026-02-15",
+        "cagnotte": 63.45
+      },
+      {
+        "date": "2026-02-22",
+        "cagnotte": 60.84
+      },
+      {
+        "date": "2026-03-01",
+        "cagnotte": 67.13
+      },
+      {
+        "date": "2026-03-08",
+        "cagnotte": 70.51
+      },
+      {
+        "date": "2026-03-15",
+        "cagnotte": 70.51
+      },
+      {
+        "date": "2026-03-22",
+        "cagnotte": 70.51
+      },
+      {
+        "date": "2026-03-29",
+        "cagnotte": 62.71
+      },
+      {
+        "date": "2026-04-05",
+        "cagnotte": 66.67
+      },
+      {
+        "date": "2026-04-12",
+        "cagnotte": 55.13
+      },
+      {
+        "date": "2026-04-19",
+        "cagnotte": 56.76
+      },
+      {
+        "date": "2026-04-26",
+        "cagnotte": 55.95
+      }
+    ],
+    "aleatoire": [
+      {
+        "date": "2026-01-04",
+        "cagnotte": 39.3
+      },
+      {
+        "date": "2026-01-11",
+        "cagnotte": 25.09
+      },
+      {
+        "date": "2026-01-18",
+        "cagnotte": 26.97
+      }
+    ]
+  },
+  "calibration_test": [
+    {
+      "tranche": "0-10 %",
+      "n": 145,
+      "prix_moyen": 0.0236,
+      "freq_reelle": 0.0207
+    },
+    {
+      "tranche": "10-20 %",
+      "n": 41,
+      "prix_moyen": 0.1506,
+      "freq_reelle": 0.1707
+    },
+    {
+      "tranche": "20-30 %",
+      "n": 51,
+      "prix_moyen": 0.2549,
+      "freq_reelle": 0.2941
+    },
+    {
+      "tranche": "30-40 %",
+      "n": 43,
+      "prix_moyen": 0.3519,
+      "freq_reelle": 0.2093
+    },
+    {
+      "tranche": "40-50 %",
+      "n": 62,
+      "prix_moyen": 0.4661,
+      "freq_reelle": 0.4516
+    },
+    {
+      "tranche": "50-60 %",
+      "n": 69,
+      "prix_moyen": 0.5417,
+      "freq_reelle": 0.5797
+    },
+    {
+      "tranche": "60-70 %",
+      "n": 25,
+      "prix_moyen": 0.64,
+      "freq_reelle": 0.72
+    },
+    {
+      "tranche": "70-80 %",
+      "n": 17,
+      "prix_moyen": 0.7485,
+      "freq_reelle": 0.7059
+    },
+    {
+      "tranche": "80-90 %",
+      "n": 9,
+      "prix_moyen": 0.8472,
+      "freq_reelle": 0.8889
+    },
+    {
+      "tranche": "90-100 %",
+      "n": 18,
+      "prix_moyen": 0.9733,
+      "freq_reelle": 1.0
+    }
+  ],
+  "calibration_apprentissage": [
+    {
+      "tranche": "0-10 %",
+      "n": 948,
+      "prix_moyen": 0.0214,
+      "freq_reelle": 0.0232,
+      "ecart": 0.0017
+    },
+    {
+      "tranche": "10-20 %",
+      "n": 209,
+      "prix_moyen": 0.1549,
+      "freq_reelle": 0.1579,
+      "ecart": 0.0026
+    },
+    {
+      "tranche": "20-30 %",
+      "n": 237,
+      "prix_moyen": 0.2507,
+      "freq_reelle": 0.2616,
+      "ecart": 0.0097
+    },
+    {
+      "tranche": "30-40 %",
+      "n": 148,
+      "prix_moyen": 0.3509,
+      "freq_reelle": 0.3176,
+      "ecart": -0.0277
+    },
+    {
+      "tranche": "40-50 %",
+      "n": 378,
+      "prix_moyen": 0.4817,
+      "freq_reelle": 0.4841,
+      "ecart": 0.0023
+    },
+    {
+      "tranche": "50-60 %",
+      "n": 155,
+      "prix_moyen": 0.5411,
+      "freq_reelle": 0.4645,
+      "ecart": -0.0642
+    },
+    {
+      "tranche": "60-70 %",
+      "n": 68,
+      "prix_moyen": 0.6429,
+      "freq_reelle": 0.7353,
+      "ecart": 0.0641
+    },
+    {
+      "tranche": "70-80 %",
+      "n": 77,
+      "prix_moyen": 0.7496,
+      "freq_reelle": 0.7013,
+      "ecart": -0.0347
+    },
+    {
+      "tranche": "80-90 %",
+      "n": 61,
+      "prix_moyen": 0.8514,
+      "freq_reelle": 0.8361,
+      "ecart": -0.0102
+    },
+    {
+      "tranche": "90-100 %",
+      "n": 95,
+      "prix_moyen": 0.9658,
+      "freq_reelle": 0.9789,
+      "ecart": 0.01
+    }
+  ],
+  "categories": [
+    {
+      "categorie": "Sport",
+      "n": 1160.0,
+      "brier": 0.1767,
+      "part_yes": 0.351
+    },
+    {
+      "categorie": "Crypto",
+      "n": 535.0,
+      "brier": 0.1298,
+      "part_yes": 0.303
+    },
+    {
+      "categorie": "Politique",
+      "n": 391.0,
+      "brier": 0.0893,
+      "part_yes": 0.233
+    },
+    {
+      "categorie": "Autre",
+      "n": 287.0,
+      "brier": 0.065,
+      "part_yes": 0.233
+    },
+    {
+      "categorie": "Tech & IA",
+      "n": 174.0,
+      "brier": 0.0623,
+      "part_yes": 0.161
+    },
+    {
+      "categorie": "Culture",
+      "n": 133.0,
+      "brier": 0.0855,
+      "part_yes": 0.263
+    },
+    {
+      "categorie": "Météo",
+      "n": 107.0,
+      "brier": 0.0892,
+      "part_yes": 0.131
+    },
+    {
+      "categorie": "Économie",
+      "n": 69.0,
+      "brier": 0.132,
+      "part_yes": 0.304
+    }
+  ],
+  "calibration_par_categorie": [],
+  "aleatoire": {
+    "tirages": 300,
+    "mediane": 26.95,
+    "meilleur": 114.7,
+    "meilleur_plus_haut": 202.42,
+    "part_gagnants_pct": 1.0,
+    "histogramme": [
+      188,
+      100,
+      9,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      1
+    ],
+    "bornes": [
+      20.11,
+      27.99,
+      35.88,
+      43.76,
+      51.64,
+      59.52,
+      67.41,
+      75.29,
+      83.17,
+      91.05,
+      98.94,
+      106.82,
+      114.7
+    ]
+  },
+  "regles": {
+    "cagnotte": 50.0,
+    "ecart_min_points": 8.0,
+    "kelly": 0.5,
+    "plafond_pct": 6.0,
+    "max_ouverts": 5,
+    "stop_pct": 40.0,
+    "glissement_points": 1.0,
+    "mise_min": 1.0,
+    "decision_heures": 72
+  }
+}

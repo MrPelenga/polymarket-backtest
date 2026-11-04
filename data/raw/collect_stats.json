@@ -1,8 +1,18 @@
 {
-  "marches_recus": 100,
-  "marches_binaires_resolus": 61,
-  "marches_echantillon": 61,
+  "marches_recus": 292322,
+  "marches_binaires_resolus": 290783,
+  "marches_echantillon": 6000,
+  "marches_par_categorie": {
+    "Crypto": 143526,
+    "Sport": 89237,
+    "M\u00e9t\u00e9o": 21123,
+    "Politique": 12569,
+    "Autre": 9641,
+    "Tech & IA": 8137,
+    "Culture": 3901,
+    "\u00c9conomie": 2649
+  },
   "historiques_en_echec": 0,
-  "historiques_avec_prix_j3": 36,
+  "historiques_avec_prix_j3": 2856,
   "date_extraction": "2026-11-04"
 }
