@@ -1,0 +1,42 @@
+name: Preview portfolio
+
+on:
+  push:
+    branches: [preview]
+    paths-ignore: ["shots/**"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: MrPelenga/projet-cv-portfolio-powerbi
+          ref: polymarket-project
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build
+        run: |
+          mkdir -p shots
+          cd site && npm ci --no-audit --no-fund && npx tsc -p tsconfig.app.json --noEmit 2>&1 | tee ../shots/tsc.log; npm run build 2>&1 | tee ../shots/build.log
+      - name: Captures
+        run: |
+          pip install playwright && playwright install --with-deps chromium
+          (cd site && npx vite preview --port 4173 &) && sleep 5
+          python shoot.py 2>&1 | tee shots/report.log
+      - name: Publier les captures
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add shots && git commit -m "Captures" && git push
