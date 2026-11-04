@@ -1,0 +1,16 @@
+2026-11-04 19:47:05,638 INFO Page 0 : 100 marchés (total 100)
+2026-11-04 19:47:05,718 INFO 100 marchés reçus, 61 binaires résolus et dans le périmètre
+2026-11-04 19:47:07,826 INFO Collecte terminée : {'marches_recus': 100, 'marches_binaires_resolus': 61, 'marches_echantillon': 61, 'historiques_en_echec': 0, 'historiques_avec_prix_j3': 36, 'date_extraction': '2026-11-04'}
+2026-11-04 19:47:07,832 INFO Marchés avec prix à J-3 : 36 (apprentissage 36, test 0)
+Traceback (most recent call last):
+  File "/home/runner/work/polymarket-backtest/polymarket-backtest/run_pipeline.py", line 15, in <module>
+    backtest.run()
+  File "/home/runner/work/polymarket-backtest/polymarket-backtest/pmbt/backtest.py", line 85, in run
+    frame[col] = pd.to_datetime(frame[col], utc=True).dt.strftime("%Y-%m-%d %H:%M")
+                                ~~~~~^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/frame.py", line 4330, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/indexes/range.py", line 549, in get_loc
+    raise KeyError(key)
+KeyError: 'date_entree'
