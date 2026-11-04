@@ -1,0 +1,40 @@
+name: Pipeline
+
+# Lancé à chaque modification du code (et à la demande depuis l'onglet Actions).
+# Les tests passent d'abord ; la collecte et le backtest ne tournent que s'ils sont verts.
+on:
+  push:
+    branches: [main]
+    paths: ["pmbt/**", "run_pipeline.py", "requirements.txt", ".github/workflows/pipeline.yml"]
+  workflow_dispatch:
+    inputs:
+      step:
+        description: "Étape : all, collect ou backtest"
+        default: "all"
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Tests
+        run: python -m pytest -q
+      - name: Collecte et backtest
+        run: python run_pipeline.py ${{ github.event.inputs.step || 'all' }}
+      - name: Publier les données dans le repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || git commit -m "Données : mise à jour du pipeline [skip ci]"
+          git pull --rebase origin main
+          git push
