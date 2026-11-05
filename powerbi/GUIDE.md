@@ -18,7 +18,7 @@ Compter environ une heure. Tout se fait dans Power BI Desktop (gratuit, Windows)
 
 Dans **Transformer les données** (Power Query) :
 
-- Choisir **Fichier > Options > Paramètres régionaux : Anglais (États-Unis)** pour ce fichier, sinon les décimales à point sont mal lues. Ou, colonne par colonne : *Modifier le type > Utilisation des paramètres régionaux > Anglais (États-Unis)*.
+- **Paramètres régionaux** : les CSV écrivent les décimales avec un point. Si Power BI est en français, remplacer chaque requête par celle de [`requetes_power_query.m`](requetes_power_query.m) (*clic droit > Éditeur avancé*) : elles lisent les nombres en culture `en-US` et ajoutent déjà les colonnes `Jour`. L'affichage reste en français.
 - Mettre en type **Date/Heure** : `marches[date_cloture]`, `paris[date_entree]`, `paris[date_cloture]`, `cagnotte[date]`.
 - Ajouter une colonne `Jour` (type Date) dans `cagnotte` et `paris` : sélectionner `date` (ou `date_entree`), *Ajouter une colonne > Date > Date uniquement*, puis renommer la colonne en `Jour`. Ne pas la nommer `Date` : Power BI ne distingue pas les majuscules et la confondrait avec la colonne `date` existante.
 - `market_id` en **Texte** dans `marches` et `paris`.
