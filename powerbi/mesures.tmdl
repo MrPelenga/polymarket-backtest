@@ -84,6 +84,15 @@ createOrReplace
 			formatString: 0.0%
 			displayFolder: Paris
 
+		/// Rendement par dollar misé de la stratégie Momentum, la seule à parier sur plusieurs catégories.
+		measure 'ROI sur mises (Momentum)' = CALCULATE ( [ROI sur mises], strategies[strategie] = "momentum" )
+			formatString: 0.0%
+			displayFolder: Paris
+
+		measure 'Nb paris (Momentum)' = CALCULATE ( [Nb paris], strategies[strategie] = "momentum" )
+			formatString: #,0
+			displayFolder: Paris
+
 		measure 'Mise moyenne (% cagnotte)' = AVERAGE ( paris[pct_cagnotte] )
 			formatString: 0.0%
 			displayFolder: Paris
@@ -106,12 +115,34 @@ createOrReplace
 			formatString: #,0
 			displayFolder: Marché
 
-		measure 'Fréquence réelle' = DIVIDE ( SUMX ( calibration, calibration[freq_reelle] * calibration[n] ), SUM ( calibration[n] ) )
+		/// Fréquence réelle de « Oui » pondérée par le nombre de marchés. Sans catégorie choisie, on lit les lignes « Toutes ».
+		measure 'Fréquence réelle' = ```
+				VAR cat = IF ( HASONEVALUE ( calibration[categorie] ), VALUES ( calibration[categorie] ), "Toutes" )
+				RETURN
+				    CALCULATE (
+				        DIVIDE ( SUMX ( calibration, calibration[freq_reelle] * calibration[n] ), SUM ( calibration[n] ) ),
+				        calibration[categorie] = cat
+				    )
+				```
 			formatString: 0.0%
 			displayFolder: Calibration
 
-		measure 'Prix moyen' = DIVIDE ( SUMX ( calibration, calibration[prix_moyen] * calibration[n] ), SUM ( calibration[n] ) )
+		measure 'Prix moyen' = ```
+				VAR cat = IF ( HASONEVALUE ( calibration[categorie] ), VALUES ( calibration[categorie] ), "Toutes" )
+				RETURN
+				    CALCULATE (
+				        DIVIDE ( SUMX ( calibration, calibration[prix_moyen] * calibration[n] ), SUM ( calibration[n] ) ),
+				        calibration[categorie] = cat
+				    )
+				```
 			formatString: 0.0%
+			displayFolder: Calibration
+
+		measure 'Marchés dans la tranche' = ```
+				VAR cat = IF ( HASONEVALUE ( calibration[categorie] ), VALUES ( calibration[categorie] ), "Toutes" )
+				RETURN CALCULATE ( SUM ( calibration[n] ), calibration[categorie] = cat )
+				```
+			formatString: #,0
 			displayFolder: Calibration
 
 		measure 'Écart de calibration (points)' = ( [Fréquence réelle] - [Prix moyen] ) * 100
