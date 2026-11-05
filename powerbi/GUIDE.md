@@ -20,7 +20,7 @@ Dans **Transformer les données** (Power Query) :
 
 - Choisir **Fichier > Options > Paramètres régionaux : Anglais (États-Unis)** pour ce fichier, sinon les décimales à point sont mal lues. Ou, colonne par colonne : *Modifier le type > Utilisation des paramètres régionaux > Anglais (États-Unis)*.
 - Mettre en type **Date/Heure** : `marches[date_cloture]`, `paris[date_entree]`, `paris[date_cloture]`, `cagnotte[date]`.
-- Ajouter une colonne `Date` (type Date) dans `cagnotte` et `paris` : *Ajouter une colonne > Date > Date uniquement* à partir de `date` / `date_entree`.
+- Ajouter une colonne `Jour` (type Date) dans `cagnotte` et `paris` : sélectionner `date` (ou `date_entree`), *Ajouter une colonne > Date > Date uniquement*, puis renommer la colonne en `Jour`. Ne pas la nommer `Date` : Power BI ne distingue pas les majuscules et la confondrait avec la colonne `date` existante.
 - `market_id` en **Texte** dans `marches` et `paris`.
 
 ## 2. Table Calendrier
@@ -47,14 +47,18 @@ Marquer comme table de dates, et trier `Mois` par `MoisTri`.
 | `paris[strategie]` | `strategies[strategie]` |
 | `cagnotte[strategie]` | `strategies[strategie]` |
 | `resultats[strategie]` | `strategies[strategie]` |
-| `cagnotte[Date]` | `Calendrier[Date]` |
-| `paris[Date]` | `Calendrier[Date]` |
+| `cagnotte[Jour]` | `Calendrier[Date]` |
+| `paris[Jour]` | `Calendrier[Date]` |
 
 Toutes en filtrage **unidirectionnel**. `calibration` et `aleatoire_tirages` restent isolées : elles sont filtrées par leurs propres segments.
 
 ## 4. Mesures
 
-Créer une table vide `_Mesures` (*Accueil > Entrer des données*), puis coller les mesures de [`mesures.dax`](mesures.dax) une par une (*Nouvelle mesure*). Formats : pourcentages pour `ROI…`, `Taux de réussite`, `Drawdown…`, `Part des tirages gagnants` ; devise $ pour les montants.
+Créer une table vide `_Mesures` (*Accueil > Entrer des données*, nommer la table `_Mesures`, *Charger*).
+
+**Méthode rapide (recommandée)** : ouvrir la **vue TMDL** (icône à gauche, sous la vue Modèle), coller tout le contenu de [`mesures.tmdl`](mesures.tmdl), puis cliquer sur **Appliquer**. Les 24 mesures sont créées d'un coup, rangées en dossiers et déjà formatées. Il faut que les 7 tables, la table `Calendrier` et les colonnes `Jour` existent avant.
+
+**Méthode manuelle** : coller les mesures de [`mesures.dax`](mesures.dax) une par une (*Nouvelle mesure*). Formats : pourcentages pour `ROI…`, `Taux de réussite`, `Drawdown…`, `Part des tirages gagnants` ; devise $ pour les montants.
 
 **Contrôle** : dans un tableau avec `strategies[strategie]`, `Cagnotte finale`, `Nb paris` et `Taux de réussite`, les valeurs doivent être identiques à celles de `resultats.csv`.
 

@@ -27,13 +27,13 @@ VAR d = MAX ( Calendrier[Date] )
 RETURN
     SUMX (
         VALUES ( strategies[strategie] ),
-        VAR derniere = CALCULATE ( MAX ( cagnotte[date] ), cagnotte[Date] <= d, REMOVEFILTERS ( Calendrier ) )
+        VAR derniere = CALCULATE ( MAX ( cagnotte[date] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
         RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniere, REMOVEFILTERS ( Calendrier ) )
     )
 
 Plus haut à date =
 VAR d = MAX ( Calendrier[Date] )
-RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[Date] <= d, REMOVEFILTERS ( Calendrier ) )
+RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
 
 Drawdown = DIVIDE ( [Cagnotte à date], [Plus haut à date] ) - 1
 

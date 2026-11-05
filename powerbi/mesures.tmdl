@@ -1,0 +1,136 @@
+createOrReplace
+
+	ref table _Mesures
+
+		/// Cagnotte de départ de toutes les stratégies.
+		measure 'Cagnotte départ' = 50
+			formatString: 0.00
+			displayFolder: Cagnotte
+
+		/// Valeur au dernier point de la courbe, stratégie par stratégie.
+		measure 'Cagnotte finale' = ```
+				SUMX (
+				    VALUES ( strategies[strategie] ),
+				    VAR derniereDate = CALCULATE ( MAX ( cagnotte[date] ) )
+				    RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniereDate )
+				)
+				```
+			formatString: 0.00
+			displayFolder: Cagnotte
+
+		measure 'ROI cagnotte' = ```
+				DIVIDE (
+				    [Cagnotte finale] - [Cagnotte départ] * DISTINCTCOUNT ( strategies[strategie] ),
+				    [Cagnotte départ] * DISTINCTCOUNT ( strategies[strategie] )
+				)
+				```
+			formatString: 0.0%
+			displayFolder: Cagnotte
+
+		/// Pour la courbe : valeur de la cagnotte à la date affichée (dernier point connu).
+		measure 'Cagnotte à date' = ```
+				VAR d = MAX ( Calendrier[Date] )
+				RETURN
+				    SUMX (
+				        VALUES ( strategies[strategie] ),
+				        VAR derniere = CALCULATE ( MAX ( cagnotte[date] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
+				        RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniere, REMOVEFILTERS ( Calendrier ) )
+				    )
+				```
+			formatString: 0.00
+			displayFolder: Cagnotte
+
+		measure 'Plus haut à date' = ```
+				VAR d = MAX ( Calendrier[Date] )
+				RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
+				```
+			formatString: 0.00
+			displayFolder: Cagnotte
+
+		measure Drawdown = DIVIDE ( [Cagnotte à date], [Plus haut à date] ) - 1
+			formatString: 0.0%
+			displayFolder: Cagnotte
+
+		measure 'Drawdown max' = MINX ( VALUES ( Calendrier[Date] ), [Drawdown] )
+			formatString: 0.0%
+			displayFolder: Cagnotte
+
+		measure 'Nb paris' = COUNTROWS ( paris )
+			formatString: #,0
+			displayFolder: Paris
+
+		measure 'Paris gagnés' = SUM ( paris[gagne] )
+			formatString: #,0
+			displayFolder: Paris
+
+		measure 'Taux de réussite' = DIVIDE ( [Paris gagnés], [Nb paris] )
+			formatString: 0.0%
+			displayFolder: Paris
+
+		measure 'Montant misé' = SUM ( paris[mise] )
+			formatString: 0.00
+			displayFolder: Paris
+
+		measure 'Gain net' = SUM ( paris[gain] )
+			formatString: 0.00
+			displayFolder: Paris
+
+		/// Rendement par dollar misé : indépendant de la taille de la cagnotte.
+		measure 'ROI sur mises' = DIVIDE ( [Gain net], [Montant misé] )
+			formatString: 0.0%
+			displayFolder: Paris
+
+		measure 'Mise moyenne (% cagnotte)' = AVERAGE ( paris[pct_cagnotte] )
+			formatString: 0.0%
+			displayFolder: Paris
+
+		measure 'Écart moyen (points)' = AVERAGE ( paris[ecart_points] )
+			formatString: 0.0
+			displayFolder: Paris
+
+		/// Erreur quadratique moyenne entre le prix la veille et le résultat (0 = parfait, 0,25 = toujours 50 %).
+		measure 'Brier marché J-1' = ```
+				AVERAGEX (
+				    FILTER ( marches, NOT ISBLANK ( marches[prix_j1] ) ),
+				    ( marches[prix_j1] - marches[resultat_yes] ) ^ 2
+				)
+				```
+			formatString: 0.000
+			displayFolder: Marché
+
+		measure 'Nb marchés' = COUNTROWS ( marches )
+			formatString: #,0
+			displayFolder: Marché
+
+		measure 'Fréquence réelle' = DIVIDE ( SUMX ( calibration, calibration[freq_reelle] * calibration[n] ), SUM ( calibration[n] ) )
+			formatString: 0.0%
+			displayFolder: Calibration
+
+		measure 'Prix moyen' = DIVIDE ( SUMX ( calibration, calibration[prix_moyen] * calibration[n] ), SUM ( calibration[n] ) )
+			formatString: 0.0%
+			displayFolder: Calibration
+
+		measure 'Écart de calibration (points)' = ( [Fréquence réelle] - [Prix moyen] ) * 100
+			formatString: 0.0
+			displayFolder: Calibration
+
+		measure 'Nb tirages' = COUNTROWS ( aleatoire_tirages )
+			formatString: #,0
+			displayFolder: Hasard
+
+		measure 'Part des tirages gagnants' = ```
+				DIVIDE (
+				    COUNTROWS ( FILTER ( aleatoire_tirages, aleatoire_tirages[cagnotte_finale] > [Cagnotte départ] ) ),
+				    [Nb tirages]
+				)
+				```
+			formatString: 0.0%
+			displayFolder: Hasard
+
+		measure 'Meilleur tirage' = MAX ( aleatoire_tirages[cagnotte_finale] )
+			formatString: 0.00
+			displayFolder: Hasard
+
+		measure 'Tirage médian' = MEDIAN ( aleatoire_tirages[cagnotte_finale] )
+			formatString: 0.00
+			displayFolder: Hasard
