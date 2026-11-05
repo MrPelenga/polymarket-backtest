@@ -24,7 +24,7 @@ createOrReplace
 				    [Cagnotte départ] * DISTINCTCOUNT ( strategies[strategie] )
 				)
 				```
-			formatString: 0.0%
+			formatString: "+0.0%;-0.0%;0.0%"
 			displayFolder: Cagnotte
 
 		/// Pour la courbe : valeur de la cagnotte à la date affichée (dernier point connu).
@@ -52,11 +52,11 @@ createOrReplace
 				VAR c = [Cagnotte à date]
 				RETURN IF ( NOT ISBLANK ( c ), DIVIDE ( c, [Plus haut à date] ) - 1 )
 				```
-			formatString: 0.0%
+			formatString: "+0.0%;-0.0%;0.0%"
 			displayFolder: Cagnotte
 
 		measure 'Drawdown max' = MINX ( VALUES ( Calendrier[Date] ), [Drawdown] )
-			formatString: 0.0%
+			formatString: "+0.0%;-0.0%;0.0%"
 			displayFolder: Cagnotte
 
 		measure 'Nb paris' = COUNTROWS ( paris )
@@ -81,12 +81,12 @@ createOrReplace
 
 		/// Rendement par dollar misé : indépendant de la taille de la cagnotte.
 		measure 'ROI sur mises' = DIVIDE ( [Gain net], [Montant misé] )
-			formatString: 0.0%
+			formatString: "+0.0%;-0.0%;0.0%"
 			displayFolder: Paris
 
 		/// Rendement par dollar misé de la stratégie Momentum, la seule à parier sur plusieurs catégories.
 		measure 'ROI sur mises (Momentum)' = CALCULATE ( [ROI sur mises], strategies[strategie] = "momentum" )
-			formatString: 0.0%
+			formatString: "+0.0%;-0.0%;0.0%"
 			displayFolder: Paris
 
 		measure 'Nb paris (Momentum)' = CALCULATE ( [Nb paris], strategies[strategie] = "momentum" )
