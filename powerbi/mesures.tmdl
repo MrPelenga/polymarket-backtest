@@ -7,12 +7,12 @@ createOrReplace
 			formatString: 0.00
 			displayFolder: Cagnotte
 
-		/// Valeur au dernier point de la courbe, stratégie par stratégie.
+		/// Valeur au dernier point de la courbe, stratégie par stratégie. On prend le dernier point dans l'ordre du fichier : plusieurs paris peuvent se résoudre à la même minute.
 		measure 'Cagnotte finale' = ```
 				SUMX (
 				    VALUES ( strategies[strategie] ),
-				    VAR derniereDate = CALCULATE ( MAX ( cagnotte[date] ) )
-				    RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniereDate )
+				    VAR dernier = CALCULATE ( MAX ( cagnotte[ordre] ) )
+				    RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[ordre] = dernier )
 				)
 				```
 			formatString: 0.00
@@ -33,8 +33,8 @@ createOrReplace
 				RETURN
 				    SUMX (
 				        VALUES ( strategies[strategie] ),
-				        VAR derniere = CALCULATE ( MAX ( cagnotte[date] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
-				        RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniere, REMOVEFILTERS ( Calendrier ) )
+				        VAR dernier = CALCULATE ( MAX ( cagnotte[ordre] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
+				        RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[ordre] = dernier, REMOVEFILTERS ( Calendrier ) )
 				    )
 				```
 			formatString: 0.00
@@ -47,7 +47,11 @@ createOrReplace
 			formatString: 0.00
 			displayFolder: Cagnotte
 
-		measure Drawdown = DIVIDE ( [Cagnotte à date], [Plus haut à date] ) - 1
+		/// Baisse depuis le plus haut, vide avant le premier point de la courbe.
+		measure Drawdown = ```
+				VAR c = [Cagnotte à date]
+				RETURN IF ( NOT ISBLANK ( c ), DIVIDE ( c, [Plus haut à date] ) - 1 )
+				```
 			formatString: 0.0%
 			displayFolder: Cagnotte
 

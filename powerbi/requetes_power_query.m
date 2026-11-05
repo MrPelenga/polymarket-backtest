@@ -61,9 +61,11 @@ let
     Types = Table.TransformColumnTypes(Entetes, {
         {"date", type datetime}, {"cagnotte", type number}, {"strategie", type text}
     }, "en-US"),
-    Jour = Table.AddColumn(Types, "Jour", each DateTime.Date([date]), type date)
+    Jour = Table.AddColumn(Types, "Jour", each DateTime.Date([date]), type date),
+    // Ordre des points dans le fichier : départage les paris résolus à la même minute
+    Ordre = Table.AddIndexColumn(Jour, "ordre", 1, 1, Int64.Type)
 in
-    Jour
+    Ordre
 
 
 // ---------- calibration --------------------------------------------------------

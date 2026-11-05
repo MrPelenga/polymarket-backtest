@@ -8,13 +8,15 @@
 
 Cagnotte départ = 50
 
-// Valeur de la cagnotte au dernier point de la courbe, stratégie par stratégie
+// Valeur de la cagnotte au dernier point de la courbe, stratégie par stratégie.
+// On prend le dernier point dans l'ordre du fichier (colonne ordre) : plusieurs paris
+// peuvent se résoudre à la même minute.
 // (SUMX sur les stratégies pour rester juste si plusieurs sont sélectionnées).
 Cagnotte finale =
 SUMX (
     VALUES ( strategies[strategie] ),
-    VAR derniereDate = CALCULATE ( MAX ( cagnotte[date] ) )
-    RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniereDate )
+    VAR dernier = CALCULATE ( MAX ( cagnotte[ordre] ) )
+    RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[ordre] = dernier )
 )
 
 ROI cagnotte =
@@ -27,15 +29,18 @@ VAR d = MAX ( Calendrier[Date] )
 RETURN
     SUMX (
         VALUES ( strategies[strategie] ),
-        VAR derniere = CALCULATE ( MAX ( cagnotte[date] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
-        RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[date] = derniere, REMOVEFILTERS ( Calendrier ) )
+        VAR dernier = CALCULATE ( MAX ( cagnotte[ordre] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
+        RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[ordre] = dernier, REMOVEFILTERS ( Calendrier ) )
     )
 
 Plus haut à date =
 VAR d = MAX ( Calendrier[Date] )
 RETURN CALCULATE ( MAX ( cagnotte[cagnotte] ), cagnotte[Jour] <= d, REMOVEFILTERS ( Calendrier ) )
 
-Drawdown = DIVIDE ( [Cagnotte à date], [Plus haut à date] ) - 1
+// Vide avant le premier point de la courbe (sinon BLANK - 1 donnerait -100 %).
+Drawdown =
+VAR c = [Cagnotte à date]
+RETURN IF ( NOT ISBLANK ( c ), DIVIDE ( c, [Plus haut à date] ) - 1 )
 
 Drawdown max =
 MINX ( VALUES ( Calendrier[Date] ), [Drawdown] )
