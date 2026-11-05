@@ -92,7 +92,7 @@ DIVIDE ( SUMX ( calibration, calibration[prix_moyen] * calibration[n] ), SUM ( c
 Nb tirages = COUNTROWS ( aleatoire_tirages )
 
 Part des tirages gagnants =
-DIVIDE ( COUNTROWS ( FILTER ( aleatoire_tirages, aleatoire_tirages[cagnotte_finale] > [Cagnotte départ] ) ),
+DIVIDE ( COUNTROWS ( FILTER ( aleatoire_tirages, aleatoire_tirages[cagnotte_finale] > [Cagnotte départ] ) ) + 0,
          [Nb tirages] )
 
 Meilleur tirage = MAX ( aleatoire_tirages[cagnotte_finale] )

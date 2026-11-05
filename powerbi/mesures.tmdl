@@ -155,7 +155,7 @@ createOrReplace
 
 		measure 'Part des tirages gagnants' = ```
 				DIVIDE (
-				    COUNTROWS ( FILTER ( aleatoire_tirages, aleatoire_tirages[cagnotte_finale] > [Cagnotte départ] ) ),
+				    COUNTROWS ( FILTER ( aleatoire_tirages, aleatoire_tirages[cagnotte_finale] > [Cagnotte départ] ) ) + 0,
 				    [Nb tirages]
 				)
 				```
